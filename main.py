@@ -1,14 +1,9 @@
 # This is a NLP Python project. Uses NLTK Library (pip install nltk)
 # we first have to download nltk data, use "nltk.download()"
 
-import re
-
-from nltk.stem import PorterStemmer
-from nltk.stem import WordNetLemmatizer
 from nltk.tokenize import word_tokenize
-
-lemmatizer = WordNetLemmatizer()
-ps = PorterStemmer()
+import pre_process
+import word_cloud
 
 
 # a simple function to print contents of list
@@ -37,56 +32,14 @@ def import_book(book_file_name: str):
     return book
 
 
-# def stemming(words):
-#     # stemming the words
-#     for x in words:
-#         print(ps.stem(x))
-#
-#
-# def lemmatization(word_tokens):
-#     # Lemmatizing the words
-#
-#     lemmas = [lemmatizer.lemmatize(word, pos='v')
-#               for word in word_tokens]
-#     return lemmas
-
-
-# Remove numbers and punctuation
-def remove_numbers_and_punctuation(line):
-    result = re.sub(r'\d+', '', line)
-    result = re.sub(r'[,.]', ' ', result)
-    result = re.sub(r'[\'\"\“\”]', '', result)
-    return result
-
-
-# remove whitespace
-def remove_whitespace(line):
-    return " ".join(line.split())
-
-
-# tokenize the lines
-def tokenize(book: list):
+def tokenize(book):
     final_list = []
-    for line in book:
-        # tokenize the words after lower-casing the sentence
-        word_tokens = word_tokenize(line.lower())
-        final_list.extend(word_tokens)
+
+    # tokenize the words after lower-casing the sentence
+    word_tokens = word_tokenize(book.lower())
+    final_list.extend(word_tokens)
 
     return final_list
-
-
-# function to pre-process text, this will call various other functions
-# that will perform tasks on text like removing numbers, whitespaces etc
-def pre_process_text(book: list):
-    # we will append the strings to this list after making all changes
-    new_book = []
-
-    for line in book:
-        line = remove_numbers_and_punctuation(line)
-        line = remove_whitespace(line)
-        new_book.append(line)
-
-    return new_book
 
 
 def count_freq(book: list):
@@ -112,26 +65,31 @@ def start(book_file_name):
     # importing book and storing its lines in list
     book = import_book(book_file_name)
 
-    # we will remove first 30 lines of book since they contain
-    # contents and running section
+    # we will remove first 30 lines of book since they contain contents and running section
     # we will still use chapter name for our corpus
     book = book[30:]
 
-    # applying all pre-processing
-    new_book = pre_process_text(book)
+    # applying all pre-processing and storing result in a string
+    new_book = pre_process.start(book)
 
     # apply tokenization and storing tokens in list
     tokens = tokenize(new_book)
 
-    return tokens
+    return tokens, new_book
 
 
 if __name__ == '__main__':
     # name of the files of book1 and book2 as stored on our hard drive
     book1_file_name, book2_file_name = 'alice.book', 'shelock.book'
 
-    tokens1 = start(book1_file_name)
-    tokens2 = start(book2_file_name)
+    tokens1, new_book1 = start(book1_file_name)
+    # tokens2, new_book2 = start(book2_file_name)
+
+    # without stopwords
+    word_cloud.start(new_book1, stopwords_flag=0)
+
+    # with stopwords
+    word_cloud.start(new_book1, stopwords_flag=1)
 
     # freq = pre_process_text(book)
 
