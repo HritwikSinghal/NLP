@@ -1,10 +1,11 @@
 # This is a NLP Python project. Uses NLTK Library (pip install nltk)
 # we first have to download nltk data, use "nltk.download()"
-import nltk
+
 from nltk.tokenize import word_tokenize
 import pre_process
 import freq_dist
 import word_cloud
+import relation_word_len_freq
 
 
 # a simple function to print contents of list
@@ -44,28 +45,8 @@ def tokenize(book: str):
     return final_list
 
 
-# count freq of each token and return it in a Dict
-def count_freq(book: list):
-    freq = {}
-
-    for line in book:
-        # splitting each line into words
-        line_list = line.split()
-
-        for item in line_list:
-            # lowering all words
-            item = item.lower()
-
-            try:
-                freq[item] += 1
-            except KeyError:
-                freq[item] = 1
-
-    return freq
-
-
 # import book in list, pre-process and generate tokens
-def process_books(book_file_name):
+def pre_processing_books(book_file_name):
     # importing book and storing its lines in list
     book = import_book(book_file_name)
 
@@ -83,17 +64,43 @@ def process_books(book_file_name):
 
 
 # analyze frequency distribution
-def freq_distribution(tokens, book_file_name):
+def analyze_freq_distribution(tokens, book_file_name):
     freq_dist.start(tokens, book_file_name)
 
 
 # function to generate word Clouds
-def generate_WC(words, book_file_name):
+def generate_word_cloud(words, book_file_name):
     # without stopwords
     word_cloud.start(words, book_file_name, stopwords_flag=0)
 
     # with stopwords
     word_cloud.start(words, book_file_name, stopwords_flag=1)
+
+
+# count freq of each token and return it in a Dict
+def count_freq(tokens: list):
+    freq = {}
+    for word in tokens:
+        freq[word] = freq.get(word, 0) + 1
+
+    # return sorted dict by value
+    return {k: v for k, v in sorted(freq.items(), key=lambda item: item[1], reverse=True)}
+
+
+# to get relationship between the word length and frequency
+def get_relationship_between_the_word_length_and_frequency(tokens: list):
+    freq = count_freq(tokens)
+
+    # for prinntig the dict value
+    # for k in freq:
+    #     print(k, ": ", freq[k])
+
+    relation_word_len_freq.start(freq)
+
+    # this is for sorted acc to value
+    # print({k: v for k, v in sorted(freq.items(), key=lambda item: item[1])})
+
+    input()
 
 
 if __name__ == '__main__':
@@ -105,18 +112,13 @@ if __name__ == '__main__':
 
     for book_file_name in book_file_name_list:
         # generate tokens and pre-processing the books
-        tokens, new_book = process_books(book_file_name)
+        tokens, new_book = pre_processing_books(book_file_name)
 
         # analyze frequency distribution as plots
-        freq_distribution(tokens, book_file_name)
+        # analyze_freq_distribution(tokens, book_file_name)
 
         # generating word cloud of books
-        generate_WC(new_book, book_file_name)
+        # generate_word_cloud(new_book, book_file_name)
 
-        # freq = pre_process_text(book)
-
-        # for k in freq:
-        #     print(k, ": ", freq[k])
-
-        # this is for sorted acc to value
-        # print({k: v for k, v in sorted(freq.items(), key=lambda item: item[1])})
+        # get relationship between the word length and frequency
+        get_relationship_between_the_word_length_and_frequency(tokens)
