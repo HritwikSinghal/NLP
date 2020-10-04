@@ -7,12 +7,12 @@ from wordcloud import WordCloud, STOPWORDS
 def print_image(wordcloud: WordCloud, book_file_name, stopwords_flag=0):
     # just for naming
     if stopwords_flag:
-        name = "with_stopwords_" + book_file_name
+        name = "word_cloud_with_stopwords_removed_" + book_file_name
     else:
-        name = "without_stopwords_" + book_file_name
+        name = "word_cloud_without_stopwords_removed_" + book_file_name
 
     # actual code to output
-    wordcloud.to_file(name + '.jpg')
+    wordcloud.to_file(name + '.png')
 
 
 def start(words, book_file_name, stopwords_flag=0):
