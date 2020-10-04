@@ -32,7 +32,7 @@ def start(freq: dict, book_file_name):
     x, y = zip(*freq_list)  # unpack a list of pairs into two tuples
     plt.plot(x, y)
     plt.ylabel('freq of words with length x')
-    plt.xlabel('length x of words')
+    plt.xlabel('words of length x')
 
     # saving plot as image
-    fig.savefig('relationship_between_the_word_length_and_frequency' + book_file_name + '.png', bbox_inches="tight")
+    fig.savefig('relationship_between_the_word_length_and_frequency_' + book_file_name + '.png', bbox_inches="tight")
