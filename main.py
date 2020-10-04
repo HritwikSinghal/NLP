@@ -1,7 +1,15 @@
-# https://www.kdnuggets.com/2019/04/text-preprocessing-nlp-machine-learning.html
+# This is a NLP Python project. Uses NLTK Library (pip install nltk)
+# we first have to download nltk data, use "nltk.download()"
 
-# This is a NLP Python script.
-# stemming words using NLTK
+import re
+
+from nltk.stem import PorterStemmer
+from nltk.stem import WordNetLemmatizer
+from nltk.tokenize import word_tokenize
+
+lemmatizer = WordNetLemmatizer()
+ps = PorterStemmer()
+
 
 # a simple function to print contents of list
 def print_list(mylist: list, n=-1):
@@ -18,20 +26,53 @@ def print_list(mylist: list, n=-1):
 
 # function to import book file and return a list
 # the list contains lines of book as its elements
-def import_book(book_fn: str):
+def import_book(book_file_name: str):
     #  "sig" in "utf-8-sig" is the abbreviation of "signature" (i.e. signature utf-8 file).
     #  Using utf-8-sig to read a file will treat BOM as file info. instead of a string
     # from https://stackoverflow.com/questions/57152985/what-is-the-difference-between-utf-8-and-utf-8-sig
 
-    with open(book_fn, 'r+', encoding='utf-8-sig') as temp:
+    with open(book_file_name, 'r+', encoding='utf-8-sig') as temp:
         book = [line.strip() for line in temp.readlines() if line.strip()]
 
     return book
 
 
-# function to calculate frequency of words in the book
-# returns a dict which contains word as key and freq of each word as value
-def calc_freq_of_words(book: list):
+# Remove numbers
+def remove_numbers_and_punctuation(line):
+    result = re.sub(r'\d+', '', line)
+    result = re.sub(r'[,.]', ' ', result)
+    result = re.sub(r'\'', '', result)
+    return result
+
+
+# remove whitespace from text
+def remove_whitespace(text):
+    return " ".join(text.split())
+
+
+def stemming(words):
+    # stemming the words
+    for x in words:
+        print(ps.stem(x))
+
+
+def lemmatization(words):
+    # Lemmatizing the words
+    for x in words:
+        print(lemmatizer.lemmatize(x))
+
+
+def tokenize(book: list):
+    for line in book:
+        # tokenize the words after lower-casing the sentence
+        words = word_tokenize(line.lower())
+        print(words)
+
+        # stemming the words
+        stemming(words)
+
+
+def count_freq(book: list):
     freq = {}
 
     for line in book:
@@ -50,22 +91,25 @@ def calc_freq_of_words(book: list):
     return freq
 
 
-def start():
-    # name of the files of book1 and book2 as stored on our hard drive
-    book1_fn, book2_fn = 'alice.book', 'shelock.book'
+# function to pre-process text
+def pre_process_text(book: list):
+    pass
 
-    # importing above books and storing them in list
-    book1, book2 = import_book(book1_fn), import_book(book2_fn)
 
-    # we will remove first 30 lines of each book since they contain
+def start(book_file_name):
+    # importing book and storing its lines in list
+    book = import_book(book_file_name)
+
+    # we will remove first 30 lines of book since they contain
     # contents and running section
-    # we will still use chapter name in our corpus
-    book1, book2 = book1[30:], book2[30:]
+    # we will still use chapter name for our corpus
+    book = book[30:]
 
-    freq = calc_freq_of_words(book1)
+    # applying all pre-processing
+    pre_process_text(book)
 
-    print_list(book1, 30)
-    # print_list(book2, 30)
+    # freq = pre_process_text(book)
+    # print_list(book, 30)
 
     # for k in freq:
     #     print(k, ": ", freq[k])
@@ -75,4 +119,8 @@ def start():
 
 
 if __name__ == '__main__':
-    start()
+    # name of the files of book1 and book2 as stored on our hard drive
+    book1_file_name, book2_file_name = 'alice.book', 'shelock.book'
+
+    start(book1_file_name)
+    # start(book2_file_name)
