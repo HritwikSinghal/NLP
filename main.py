@@ -1,8 +1,9 @@
 # This is a NLP Python project. Uses NLTK Library (pip install nltk)
 # we first have to download nltk data, use "nltk.download()"
-
+import nltk
 from nltk.tokenize import word_tokenize
 import pre_process
+import freq_dist
 import word_cloud
 
 
@@ -32,7 +33,8 @@ def import_book(book_file_name: str):
     return book
 
 
-def tokenize(book):
+# returns tokens of the input str
+def tokenize(book: str):
     final_list = []
 
     # tokenize the words after lower-casing the sentence
@@ -42,6 +44,7 @@ def tokenize(book):
     return final_list
 
 
+# count freq of each token and return it in a Dict
 def count_freq(book: list):
     freq = {}
 
@@ -61,7 +64,8 @@ def count_freq(book: list):
     return freq
 
 
-def start(book_file_name):
+# import book in list, pre-process and generate tokens
+def process_books(book_file_name):
     # importing book and storing its lines in list
     book = import_book(book_file_name)
 
@@ -78,6 +82,11 @@ def start(book_file_name):
     return tokens, new_book
 
 
+# analyze frequency distribution
+def freq_distribution(tokens, book_file_name):
+    freq_dist.start(tokens, book_file_name)
+
+
 # function to generate word Clouds
 def generate_WC(words, book_file_name):
     # without stopwords
@@ -89,18 +98,25 @@ def generate_WC(words, book_file_name):
 
 if __name__ == '__main__':
     # name of the files of book1 and book2 as stored on our hard drive
-    book1_file_name, book2_file_name = 'alice.book', 'shelock.book'
+    book_file_name_list = [
+        'alice.book',
+        'shelock.book'
+    ]
 
-    tokens1, new_book1 = start(book1_file_name)
-    tokens2, new_book2 = start(book2_file_name)
+    for book_file_name in book_file_name_list:
+        # generate tokens and pre-processing the books
+        tokens, new_book = process_books(book_file_name)
 
-    generate_WC(new_book1, book1_file_name)
-    generate_WC(new_book2, book2_file_name)
+        # analyze frequency distribution as plots
+        freq_distribution(tokens, book_file_name)
 
-    # freq = pre_process_text(book)
+        # generating word cloud of books
+        generate_WC(new_book, book_file_name)
 
-    # for k in freq:
-    #     print(k, ": ", freq[k])
+        # freq = pre_process_text(book)
 
-    # this is for sorted acc to value
-    # print({k: v for k, v in sorted(freq.items(), key=lambda item: item[1])})
+        # for k in freq:
+        #     print(k, ": ", freq[k])
+
+        # this is for sorted acc to value
+        # print({k: v for k, v in sorted(freq.items(), key=lambda item: item[1])})
