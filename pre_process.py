@@ -17,7 +17,7 @@ def remove_whitespace(line):
 # function to pre-process text, this will call various other functions
 # that will perform tasks on text like removing numbers, whitespaces etc
 # returns a string
-def pre_process_text(book: list):
+def start(book: list):
     # we will append the strings to this list after making all changes
     new_book = ''
 
@@ -27,7 +27,3 @@ def pre_process_text(book: list):
         new_book += ' ' + line
 
     return new_book
-
-
-def start(book: list):
-    return pre_process_text(book)

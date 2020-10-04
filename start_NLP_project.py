@@ -2,23 +2,14 @@
 # we first have to download nltk data, use "nltk.download()"
 
 from nltk.tokenize import word_tokenize
+from nltk.stem import WordNetLemmatizer
+
 import pre_process
 import freq_dist_tokens
 import word_cloud
 import relation_word_len_freq
 
-
-# a simple function to print contents of list
-def print_list(mylist: list, n=-1):
-    if n == -1:
-        br_point = len(mylist)
-    else:
-        br_point = n
-
-    print("\n\n====================================\n")
-    for x in range(br_point):
-        print(mylist[x])
-    print("\n====================================\n\n")
+lemmatizer = WordNetLemmatizer()
 
 
 # function to import book file and return a list
@@ -34,18 +25,26 @@ def import_book(book_file_name: str):
     return book
 
 
-# returns tokens of the input str
-def tokenize(book: str):
+# takes a book as string, tokenize it, then lemmetize those tokens
+# then join those lemmas to form new book and return both the new book and lemmas
+def tokenize_and_lemmatization(book):
+    # tokenize the book after lower-casing the sentences
     final_list = []
-
-    # tokenize the words after lower-casing the sentence
     word_tokens = word_tokenize(book.lower())
     final_list.extend(word_tokens)
 
-    return final_list
+    # Lemmatizing the tokens in final_list and storing them in "lemmas"
+    lemmas = [lemmatizer.lemmatize(word)
+              for word in final_list]
+
+    # join the lemmas to form a book
+    new_book = ' '.join(lemmas)
+
+    # and return both the new book and lemmas
+    return new_book, lemmas
 
 
-# import book in list, pre-process and generate tokens
+# import book in list, pre-process & do lemmatization and generate tokens
 def pre_processing_books(book_file_name):
     # importing book and storing its lines in list
     book = import_book(book_file_name)
@@ -57,8 +56,8 @@ def pre_processing_books(book_file_name):
     # applying all pre-processing and storing result in a string
     new_book = pre_process.start(book)
 
-    # apply tokenization and storing tokens in list
-    tokens = tokenize(new_book)
+    # lemmatizing tokens
+    new_book, tokens = tokenize_and_lemmatization(new_book)
 
     return tokens, new_book
 
@@ -104,8 +103,9 @@ if __name__ == '__main__':
     ]
 
     for book_file_name in book_file_name_list:
-        # generate tokens and pre-processing the books
+        # generate tokens and do pre-processing & lemmatization of the book
         tokens, new_book = pre_processing_books(book_file_name)
+        input()
 
         # analyze frequency distribution of tokens as plots
         analyze_freq_distribution(tokens, book_file_name)
