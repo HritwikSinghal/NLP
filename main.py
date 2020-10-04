@@ -2,6 +2,7 @@
 # we first have to download nltk data, use "nltk.download()"
 
 import re
+import random
 
 from nltk.stem import PorterStemmer
 from nltk.stem import WordNetLemmatizer
@@ -37,39 +38,56 @@ def import_book(book_file_name: str):
     return book
 
 
-# Remove numbers
+# def stemming(words):
+#     # stemming the words
+#     for x in words:
+#         print(ps.stem(x))
+#
+#
+# def lemmatization(word_tokens):
+#     # Lemmatizing the words
+#
+#     lemmas = [lemmatizer.lemmatize(word, pos='v')
+#               for word in word_tokens]
+#     return lemmas
+
+
+# Remove numbers and punctuation
 def remove_numbers_and_punctuation(line):
     result = re.sub(r'\d+', '', line)
     result = re.sub(r'[,.]', ' ', result)
-    result = re.sub(r'\'', '', result)
+    result = re.sub(r'[\'\"\“\”]', '', result)
     return result
 
 
-# remove whitespace from text
-def remove_whitespace(text):
-    return " ".join(text.split())
+# remove whitespace
+def remove_whitespace(line):
+    return " ".join(line.split())
 
 
-def stemming(words):
-    # stemming the words
-    for x in words:
-        print(ps.stem(x))
-
-
-def lemmatization(words):
-    # Lemmatizing the words
-    for x in words:
-        print(lemmatizer.lemmatize(x))
-
-
+# tokenize the lines
 def tokenize(book: list):
+    final_list = []
     for line in book:
         # tokenize the words after lower-casing the sentence
-        words = word_tokenize(line.lower())
-        print(words)
+        word_tokens = word_tokenize(line.lower())
+        final_list.extend(word_tokens)
 
-        # stemming the words
-        stemming(words)
+    return final_list
+
+
+# function to pre-process text, this will call various other functions
+# that will perform tasks on text like removing numbers, whitespaces etc
+def pre_process_text(book: list):
+    # we will append the strings to this list after making all changes
+    new_book = []
+
+    for line in book:
+        line = remove_numbers_and_punctuation(line)
+        line = remove_whitespace(line)
+        new_book.append(line)
+
+    return new_book
 
 
 def count_freq(book: list):
@@ -91,11 +109,6 @@ def count_freq(book: list):
     return freq
 
 
-# function to pre-process text
-def pre_process_text(book: list):
-    pass
-
-
 def start(book_file_name):
     # importing book and storing its lines in list
     book = import_book(book_file_name)
@@ -106,7 +119,10 @@ def start(book_file_name):
     book = book[30:]
 
     # applying all pre-processing
-    pre_process_text(book)
+    new_book = pre_process_text(book)
+
+    # apply tokenization
+    tokens = tokenize(new_book)
 
     # freq = pre_process_text(book)
     # print_list(book, 30)
