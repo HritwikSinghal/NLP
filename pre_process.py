@@ -4,8 +4,8 @@ import re
 # remove numbers and punctuation
 def remove_numbers_and_punctuation(line):
     result = re.sub(r'\d+', '', line)
-    result = re.sub(r'[,.;]', ' ', result)
-    result = re.sub(r'[\'\"\“\”\’]', '', result)
+    result = re.sub(r'[,.;:]', ' ', result)
+    result = re.sub(r'[\'\"\“\”\’\-\_]', '', result)
     return result
 
 

@@ -88,19 +88,12 @@ def count_freq(tokens: list):
 
 
 # to get relationship between the word length and frequency
-def get_relationship_between_the_word_length_and_frequency(tokens: list):
+def get_relationship_between_the_word_length_and_frequency(tokens: list, book_file_name):
+    # count freq of each token
     freq = count_freq(tokens)
 
-    # for prinntig the dict value
-    # for k in freq:
-    #     print(k, ": ", freq[k])
-
-    relation_word_len_freq.start(freq)
-
-    # this is for sorted acc to value
-    # print({k: v for k, v in sorted(freq.items(), key=lambda item: item[1])})
-
-    input()
+    # get relationship
+    relation_word_len_freq.start(freq, book_file_name)
 
 
 if __name__ == '__main__':
@@ -115,10 +108,10 @@ if __name__ == '__main__':
         tokens, new_book = pre_processing_books(book_file_name)
 
         # analyze frequency distribution as plots
-        # analyze_freq_distribution(tokens, book_file_name)
+        analyze_freq_distribution(tokens, book_file_name)
 
         # generating word cloud of books
-        # generate_word_cloud(new_book, book_file_name)
+        generate_word_cloud(new_book, book_file_name)
 
         # get relationship between the word length and frequency
-        get_relationship_between_the_word_length_and_frequency(tokens)
+        get_relationship_between_the_word_length_and_frequency(tokens, book_file_name)
