@@ -8,7 +8,7 @@ import word_cloud
 
 # a simple function to print contents of list
 def print_list(mylist: list, n=-1):
-    if n == 0:
+    if n == -1:
         br_point = len(mylist)
     else:
         br_point = n
@@ -78,18 +78,24 @@ def start(book_file_name):
     return tokens, new_book
 
 
+# function to generate word Clouds
+def generate_WC(words, book_file_name):
+    # without stopwords
+    word_cloud.start(words, book_file_name, stopwords_flag=0)
+
+    # with stopwords
+    word_cloud.start(words, book_file_name, stopwords_flag=1)
+
+
 if __name__ == '__main__':
     # name of the files of book1 and book2 as stored on our hard drive
     book1_file_name, book2_file_name = 'alice.book', 'shelock.book'
 
     tokens1, new_book1 = start(book1_file_name)
-    # tokens2, new_book2 = start(book2_file_name)
+    tokens2, new_book2 = start(book2_file_name)
 
-    # without stopwords
-    word_cloud.start(new_book1, stopwords_flag=0)
-
-    # with stopwords
-    word_cloud.start(new_book1, stopwords_flag=1)
+    generate_WC(new_book1, book1_file_name)
+    generate_WC(new_book2, book2_file_name)
 
     # freq = pre_process_text(book)
 

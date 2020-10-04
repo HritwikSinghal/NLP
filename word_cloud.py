@@ -1,31 +1,31 @@
 # Python program to generate WordCloud
 
-# importing all necessery modules
-import matplotlib.pyplot as plt
-import pandas as pd
-from PIL import Image
+from nltk.corpus import stopwords
 from wordcloud import WordCloud, STOPWORDS
 
 
-def plot(wordcloud):
-    # plot the WordCloud image
-    plt.figure(figsize=(8, 8), facecolor=None)
-    plt.imshow(wordcloud)
-    plt.axis("off")
-    plt.tight_layout(pad=0)
-    plt.show()
-
-
-def start(words, stopwords_flag=0):
+def print_image(wordcloud: WordCloud, book_file_name, stopwords_flag=0):
     if stopwords_flag:
-        stopwords = set(STOPWORDS)
+        name = "with_stopwords_" + book_file_name
+    else:
+        name = "without_stopwords_" + book_file_name
+
+    wordcloud.to_file(name + '.jpg')
+
+
+def start(words, book_file_name, stopwords_flag=0):
+
+    if stopwords_flag:
+        my_stopwords = set(STOPWORDS)
+        # my_stopwords = set(stopwords.words('english'))
+
         wordcloud = WordCloud(width=1920, height=1080,
                               background_color='white',
-                              min_font_size=10, stopwords=stopwords).generate(words)
+                              stopwords=my_stopwords).generate(words)
 
     else:
         wordcloud = WordCloud(width=1920, height=1080,
-                              background_color='white',
-                              min_font_size=10).generate(words)
+                              background_color='white').generate(words)
 
-    plot(wordcloud)
+    # we will use this to output image
+    print_image(wordcloud, book_file_name, stopwords_flag=stopwords_flag)
