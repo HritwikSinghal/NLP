@@ -2,7 +2,6 @@
 # we first have to download nltk data, use "nltk.download()"
 
 import re
-import random
 
 from nltk.stem import PorterStemmer
 from nltk.stem import WordNetLemmatizer
@@ -121,22 +120,23 @@ def start(book_file_name):
     # applying all pre-processing
     new_book = pre_process_text(book)
 
-    # apply tokenization
+    # apply tokenization and storing tokens in list
     tokens = tokenize(new_book)
 
-    # freq = pre_process_text(book)
-    # print_list(book, 30)
-
-    # for k in freq:
-    #     print(k, ": ", freq[k])
-
-    # this is for sorted acc to value
-    # print({k: v for k, v in sorted(freq.items(), key=lambda item: item[1])})
+    return tokens
 
 
 if __name__ == '__main__':
     # name of the files of book1 and book2 as stored on our hard drive
     book1_file_name, book2_file_name = 'alice.book', 'shelock.book'
 
-    start(book1_file_name)
-    # start(book2_file_name)
+    tokens1 = start(book1_file_name)
+    tokens2 = start(book2_file_name)
+
+    # freq = pre_process_text(book)
+
+    # for k in freq:
+    #     print(k, ": ", freq[k])
+
+    # this is for sorted acc to value
+    # print({k: v for k, v in sorted(freq.items(), key=lambda item: item[1])})
