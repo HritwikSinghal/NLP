@@ -3,7 +3,7 @@
 
 from nltk.tokenize import word_tokenize
 import pre_process
-import freq_dist
+import freq_dist_tokens
 import word_cloud
 import relation_word_len_freq
 
@@ -63,9 +63,9 @@ def pre_processing_books(book_file_name):
     return tokens, new_book
 
 
-# analyze frequency distribution
+# analyze frequency distribution of tokens
 def analyze_freq_distribution(tokens, book_file_name):
-    freq_dist.start(tokens, book_file_name)
+    freq_dist_tokens.start(tokens, book_file_name)
 
 
 # function to generate word Clouds
@@ -99,15 +99,15 @@ def get_relationship_between_the_word_length_and_frequency(tokens: list, book_fi
 if __name__ == '__main__':
     # name of the files of book1 and book2 as stored on our hard drive
     book_file_name_list = [
-        'alice.book',
-        'shelock.book'
+        '0_alice.book',
+        '0_shelock.book'
     ]
 
     for book_file_name in book_file_name_list:
         # generate tokens and pre-processing the books
         tokens, new_book = pre_processing_books(book_file_name)
 
-        # analyze frequency distribution as plots
+        # analyze frequency distribution of tokens as plots
         analyze_freq_distribution(tokens, book_file_name)
 
         # generating word cloud of books
