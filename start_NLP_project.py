@@ -8,6 +8,7 @@ import pre_process
 import freq_dist_tokens
 import word_cloud
 import relation_word_len_freq
+import pos_tag
 
 lemmatizer = WordNetLemmatizer()
 
@@ -44,8 +45,8 @@ def tokenize_and_lemmatization(book):
     return new_book, lemmas
 
 
-# import book in list, pre-process & do lemmatization and generate tokens
-def pre_processing_books(book_file_name):
+# import book in list, pre-process, generate tokens and do lemmatization
+def pre_processing_book(book_file_name):
     # importing book and storing its lines in list
     book = import_book(book_file_name)
 
@@ -63,7 +64,7 @@ def pre_processing_books(book_file_name):
 
 
 # analyze frequency distribution of tokens
-def analyze_freq_distribution(tokens, book_file_name):
+def analyze_freq_distribution_of_tokens(tokens, book_file_name):
     freq_dist_tokens.start(tokens, book_file_name)
 
 
@@ -77,7 +78,7 @@ def generate_word_cloud(words, book_file_name):
 
 
 # count freq of each token and return it in a Dict
-def count_freq(tokens: list):
+def count_freq_of_each_token(tokens: list):
     freq = {}
     for word in tokens:
         freq[word] = freq.get(word, 0) + 1
@@ -89,10 +90,15 @@ def count_freq(tokens: list):
 # to get relationship between the word length and frequency
 def get_relationship_between_the_word_length_and_frequency(tokens: list, book_file_name):
     # count freq of each token
-    freq = count_freq(tokens)
+    freq = count_freq_of_each_token(tokens)
 
     # get relationship
     relation_word_len_freq.start(freq, book_file_name)
+
+
+# do POS_tagging and Get the distribution of various tags
+def do_pos_tag_and_get_dist_tags(tokens, book_file_name):
+    pos_tag.start(tokens, book_file_name)
 
 
 if __name__ == '__main__':
@@ -104,14 +110,17 @@ if __name__ == '__main__':
 
     for book_file_name in book_file_name_list:
         # generate tokens and do pre-processing & lemmatization of the book
-        tokens, new_book = pre_processing_books(book_file_name)
-        input()
+        tokens, new_book = pre_processing_book(book_file_name)
 
         # analyze frequency distribution of tokens as plots
-        analyze_freq_distribution(tokens, book_file_name)
+        analyze_freq_distribution_of_tokens(tokens, book_file_name)
 
         # generating word cloud of books
         generate_word_cloud(new_book, book_file_name)
 
         # get relationship between the word length and frequency
         get_relationship_between_the_word_length_and_frequency(tokens, book_file_name)
+
+        # do POS_tagging and Get the distribution of various tags
+        # We will be using PennTreebank as tagset which comes by default in NLTK
+        do_pos_tag_and_get_dist_tags(tokens, book_file_name)

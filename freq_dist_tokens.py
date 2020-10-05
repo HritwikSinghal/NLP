@@ -7,8 +7,15 @@ def start(tokens, book_file_name):
     freq_dist = nltk.FreqDist(tokens)
 
     # printing 25 most common words
-    print("Printing 25 most common words for ", book_file_name)
-    print(freq_dist.most_common(25), '\n')
+    less_freq_list = freq_dist.most_common(25)
+
+    print("\n=========== 25 most common words for:", book_file_name,
+          "===========\n")
+    print("Word : Count")
+    for x in less_freq_list:
+        word, count = x
+        print(word, '\t\t', count)
+    print()
 
     # this is the plotting part
     fig = plt.figure(figsize=(10, 4))
