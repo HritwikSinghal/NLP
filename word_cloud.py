@@ -51,4 +51,3 @@ def start(words, book_file_name, stopwords_flag=0):
 
     # print output to image
     print_image(wordcloud, book_file_name, stopwords_flag=stopwords_flag)
-    input("STOP")
