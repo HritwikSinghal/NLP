@@ -109,7 +109,7 @@ if __name__ == '__main__':
         tokens, new_book = pre_processing_book(book)
 
         # analyze frequency distribution of tokens and plot it
-        analyze_freq_distribution_of_tokens(tokens, book_file_name)
+        # analyze_freq_distribution_of_tokens(tokens, book_file_name)
 
         # generating word cloud of books
         generate_word_cloud(new_book, book_file_name)
