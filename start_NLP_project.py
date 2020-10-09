@@ -45,19 +45,12 @@ def tokenize_and_lemmatization(book):
     return new_book, lemmas
 
 
-# import book in list, pre-process, generate tokens and do lemmatization
-def pre_processing_book(book_file_name):
-    # importing book and storing its lines in list
-    book = import_book(book_file_name)
-
-    # we will remove first 30 lines of book since they contain contents and running section
-    # we will still use chapter name for our corpus
-    book = book[30:]
-
+# Process, generate tokens and do lemmatization
+def pre_processing_book(book):
     # applying all pre-processing and storing result in a string
     new_book = pre_process.start(book)
 
-    # lemmatizing tokens
+    # lemmatizing and tokenize the book
     new_book, tokens = tokenize_and_lemmatization(new_book)
 
     return tokens, new_book
@@ -70,10 +63,10 @@ def analyze_freq_distribution_of_tokens(tokens, book_file_name):
 
 # function to generate word Clouds
 def generate_word_cloud(words, book_file_name):
-    # without stopwords
+    # without stopwords removal
     word_cloud.start(words, book_file_name, stopwords_flag=0)
 
-    # with stopwords
+    # with stopwords removal
     word_cloud.start(words, book_file_name, stopwords_flag=1)
 
 
@@ -109,10 +102,13 @@ if __name__ == '__main__':
     ]
 
     for book_file_name in book_file_name_list:
-        # generate tokens and do pre-processing & lemmatization of the book
-        tokens, new_book = pre_processing_book(book_file_name)
+        # importing book and storing its lines in list
+        book = import_book(book_file_name)
 
-        # analyze frequency distribution of tokens as plots
+        # generate tokens and do pre-processing & lemmatization of the book
+        tokens, new_book = pre_processing_book(book)
+
+        # analyze frequency distribution of tokens and plot it
         analyze_freq_distribution_of_tokens(tokens, book_file_name)
 
         # generating word cloud of books

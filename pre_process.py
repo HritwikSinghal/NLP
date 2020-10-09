@@ -18,6 +18,10 @@ def remove_whitespace(line):
 # that will perform tasks on text like removing numbers, whitespaces etc
 # returns a string
 def start(book: list):
+    # we will remove first 30 lines of book since they contain contents and running section
+    # we will still use chapter name for our corpus
+    book = book[30:]
+
     # we will append the strings to this list after making all changes
     new_book = ''
 
