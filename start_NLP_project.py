@@ -75,7 +75,7 @@ def pre_processing_book(book: list):
     Input:      A List which contain the lines of book as its elements.
 
     Returns:    A string called "new_book".
-                A List called "lemmas".
+                A List called "tokens".
     """
 
     # applying all pre-processing and storing result in a string
@@ -89,24 +89,28 @@ def pre_processing_book(book: list):
 
 def analyze_freq_distribution_of_tokens(tokens, book_file_name):
     """
-    function:
-    Input:
-    Returns:
-    """
+    function:   wrapper function for Analyzing the frequency distribution of tokens
 
-    """Analyze frequency distribution of tokens."""
+    Input:      A List: "tokens".
+                A string: "book_file_name" which is name of the book as stored on Hard disk.
+
+    Returns:    Nothing
+    """
 
     freq_dist_tokens.start(tokens, book_file_name)
 
 
 def generate_word_cloud(words, book_file_name):
     """
-    function:
-    Input:
-    Returns:
+    function:   Wrapper Function to generate word Clouds
+    
+    Input:      A string called "words" which contains the words of book.
+                A string: "book_file_name" which is name of the book as stored on Hard disk.
+
+    Returns:    Nothing
     """
 
-    """Function to generate word Clouds."""
+    """"""
 
     # without stopwords removal
     word_cloud.start(words, book_file_name, stopwords_flag=0)
@@ -184,9 +188,11 @@ if __name__ == '__main__':
         # generating word cloud of books
         generate_word_cloud(new_book, book_file_name)
 
-        # get relationship between the word length and frequency
-        get_relationship_between_the_word_length_and_frequency(tokens, book_file_name)
+        input()
 
-        # do POS_tagging and Get the distribution of various tags
-        # We will be using PennTreebank as tagset which comes by default in NLTK
-        do_pos_tag_and_get_dist_tags(tokens, book_file_name)
+        # # get relationship between the word length and frequency
+        # get_relationship_between_the_word_length_and_frequency(tokens, book_file_name)
+        #
+        # # do POS_tagging and Get the distribution of various tags
+        # # We will be using PennTreebank as tagset which comes by default in NLTK
+        # do_pos_tag_and_get_dist_tags(tokens, book_file_name)
