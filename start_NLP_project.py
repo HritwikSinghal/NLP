@@ -178,17 +178,15 @@ if __name__ == '__main__':
         # generate tokens and do pre-processing & lemmatization of the book
         new_book, tokens = pre_processing_book(book)
 
-        input()
+        # analyze frequency distribution of tokens and plot it
+        analyze_freq_distribution_of_tokens(tokens, book_file_name)
 
-        # # analyze frequency distribution of tokens and plot it
-        # analyze_freq_distribution_of_tokens(tokens, book_file_name)
-        #
-        # # generating word cloud of books
-        # generate_word_cloud(new_book, book_file_name)
-        #
-        # # get relationship between the word length and frequency
-        # get_relationship_between_the_word_length_and_frequency(tokens, book_file_name)
-        #
-        # # do POS_tagging and Get the distribution of various tags
-        # # We will be using PennTreebank as tagset which comes by default in NLTK
-        # do_pos_tag_and_get_dist_tags(tokens, book_file_name)
+        # generating word cloud of books
+        generate_word_cloud(new_book, book_file_name)
+
+        # get relationship between the word length and frequency
+        get_relationship_between_the_word_length_and_frequency(tokens, book_file_name)
+
+        # do POS_tagging and Get the distribution of various tags
+        # We will be using PennTreebank as tagset which comes by default in NLTK
+        do_pos_tag_and_get_dist_tags(tokens, book_file_name)
