@@ -24,8 +24,10 @@ lemmatizer = WordNetLemmatizer()
 def import_book(book_file_name: str):
     """
     function:   to import book file and return the lines as list.
-    Input:      A string which contains the path to the book.
-    Returns:    A List which contain the lines of book as its elements.
+
+    Input:      A string: which contains the path to the book.
+
+    Returns:    A List: which contain the lines of book as its elements.
     """
 
     """
@@ -44,13 +46,10 @@ def tokenize_and_lemmatization(book):
     function:   tokenize the book, then lemmetize those tokens,
                 then join those lemmas to a string which is stored as "new_book".
 
-    Input:      A List which contain the lines of book as its elements.
-    Returns:    A string called "new_book".
-                A
-    """
+    Input:      A String which contain book.
 
-    """
-    then join those lemmas to form new book and return both the new book and lemmas.
+    Returns:    A string called "new_book".
+                A List called "lemmas".
     """
 
     # tokenize the book after lower-casing the sentences
@@ -69,11 +68,14 @@ def tokenize_and_lemmatization(book):
     return new_book, lemmas
 
 
-def pre_processing_book(book):
+def pre_processing_book(book: list):
     """
     function:   Process, generate tokens and do lemmatization.
+
     Input:      A List which contain the lines of book as its elements.
-    Returns:
+
+    Returns:    A string called "new_book".
+                A List called "lemmas".
     """
 
     # applying all pre-processing and storing result in a string
@@ -82,7 +84,7 @@ def pre_processing_book(book):
     # lemmatizing and tokenize the book
     new_book, tokens = tokenize_and_lemmatization(new_book)
 
-    return tokens, new_book
+    return new_book, tokens
 
 
 def analyze_freq_distribution_of_tokens(tokens, book_file_name):
@@ -174,7 +176,7 @@ if __name__ == '__main__':
         book = import_book(book_file_name)
 
         # generate tokens and do pre-processing & lemmatization of the book
-        tokens, new_book = pre_processing_book(book)
+        new_book, tokens = pre_processing_book(book)
 
         input()
 
