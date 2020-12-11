@@ -121,12 +121,12 @@ def generate_word_cloud(words, book_file_name):
 
 def count_freq_of_each_token(tokens: list):
     """
-    function:
-    Input:
-    Returns:
-    """
+    function:   Count freq of each token and store it in a Dict.
 
-    """Count freq of each token and return it in a Dict."""
+    Input:      A list: "tokens"
+
+    Returns:    A dictionary: which contains the freq of each token along with it.
+    """
 
     freq = {}
     for word in tokens:
@@ -138,12 +138,13 @@ def count_freq_of_each_token(tokens: list):
 
 def get_relationship_between_the_word_length_and_frequency(tokens: list, book_file_name):
     """
-    function:
-    Input:
-    Returns:
-    """
+    function:   To get relationship between the word length and frequency.
 
-    """To get relationship between the word length and frequency."""
+    Input:      A list:     "tokens"
+                A string:   "book_file_name" which is name of the book as stored on Hard disk.
+
+    Returns:    Nothing
+    """
 
     # count freq of each token
     freq = count_freq_of_each_token(tokens)
@@ -152,8 +153,15 @@ def get_relationship_between_the_word_length_and_frequency(tokens: list, book_fi
     relation_word_len_freq.start(freq, book_file_name)
 
 
-def do_pos_tag_and_get_dist_tags(tokens, book_file_name):
-    """Do POS_tagging and Get the distribution of various tags."""
+def do_pos_tag_and_get_dist_tags(tokens: list, book_file_name):
+    """
+    function:   Wrapper function to do POS_tagging and Get the distribution of various tags.
+
+    Input:      A list:     "tokens"
+                A string:   "book_file_name" which is name of the book as stored on Hard disk.
+
+    Returns:    Nothing
+    """
 
     pos_tag.start(tokens, book_file_name)
 
@@ -188,11 +196,9 @@ if __name__ == '__main__':
         # generating word cloud of books
         generate_word_cloud(new_book, book_file_name)
 
-        input()
+        # get relationship between the word length and frequency
+        get_relationship_between_the_word_length_and_frequency(tokens, book_file_name)
 
-        # # get relationship between the word length and frequency
-        # get_relationship_between_the_word_length_and_frequency(tokens, book_file_name)
-        #
-        # # do POS_tagging and Get the distribution of various tags
-        # # We will be using PennTreebank as tagset which comes by default in NLTK
-        # do_pos_tag_and_get_dist_tags(tokens, book_file_name)
+        # do POS_tagging and Get the distribution of various tags
+        # We will be using PennTreebank as tagset which comes by default in NLTK
+        do_pos_tag_and_get_dist_tags(tokens, book_file_name)
