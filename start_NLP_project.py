@@ -1,8 +1,14 @@
 """"
-This is a NLP Python project. Uses NLTK Library (pip install nltk)
+This is a NLP Python project. Uses NLTK Library.
 We first have to download nltk data, use "nltk.download()"
 """
-import nltk
+
+"""
+function:
+Input:
+Returns:
+"""
+
 from nltk.tokenize import word_tokenize
 from nltk.stem import WordNetLemmatizer
 
@@ -16,7 +22,11 @@ lemmatizer = WordNetLemmatizer()
 
 
 def import_book(book_file_name: str):
-    """function to import book file and return a list, the list contains lines of book as its elements."""
+    """
+    function:   to import book file and return the lines as list.
+    Input:      A string which contains the path to the book.
+    Returns:    A List which contain the lines of book as its elements.
+    """
 
     """
     "sig" in "utf-8-sig" is the abbreviation of "signature" (i.e. signature utf-8 file).
@@ -31,7 +41,15 @@ def import_book(book_file_name: str):
 
 def tokenize_and_lemmatization(book):
     """
-    Takes a book as string, tokenize it, then lemmetize those tokens
+    function:   tokenize the book, then lemmetize those tokens,
+                then join those lemmas to a string which is stored as "new_book".
+
+    Input:      A List which contain the lines of book as its elements.
+    Returns:    A string called "new_book".
+                A
+    """
+
+    """
     then join those lemmas to form new book and return both the new book and lemmas.
     """
 
@@ -52,7 +70,11 @@ def tokenize_and_lemmatization(book):
 
 
 def pre_processing_book(book):
-    """Process, generate tokens and do lemmatization."""
+    """
+    function:   Process, generate tokens and do lemmatization.
+    Input:      A List which contain the lines of book as its elements.
+    Returns:
+    """
 
     # applying all pre-processing and storing result in a string
     new_book = pre_process.start(book)
@@ -64,12 +86,24 @@ def pre_processing_book(book):
 
 
 def analyze_freq_distribution_of_tokens(tokens, book_file_name):
+    """
+    function:
+    Input:
+    Returns:
+    """
+
     """Analyze frequency distribution of tokens."""
 
     freq_dist_tokens.start(tokens, book_file_name)
 
 
 def generate_word_cloud(words, book_file_name):
+    """
+    function:
+    Input:
+    Returns:
+    """
+
     """Function to generate word Clouds."""
 
     # without stopwords removal
@@ -80,6 +114,12 @@ def generate_word_cloud(words, book_file_name):
 
 
 def count_freq_of_each_token(tokens: list):
+    """
+    function:
+    Input:
+    Returns:
+    """
+
     """Count freq of each token and return it in a Dict."""
 
     freq = {}
@@ -91,6 +131,12 @@ def count_freq_of_each_token(tokens: list):
 
 
 def get_relationship_between_the_word_length_and_frequency(tokens: list, book_file_name):
+    """
+    function:
+    Input:
+    Returns:
+    """
+
     """To get relationship between the word length and frequency."""
 
     # count freq of each token
@@ -113,9 +159,9 @@ def get_nouns():
 if __name__ == '__main__':
     """This function runs first."""
 
-    # uncomment below line if you want to download nltk data.
+    # uncomment below two lines if you want to download nltk data.
+    # import nltk
     # nltk.download('all')
-
 
     # name of the files of book1 and book2 as stored on our hard drive
     book_file_name_list = [
@@ -130,15 +176,17 @@ if __name__ == '__main__':
         # generate tokens and do pre-processing & lemmatization of the book
         tokens, new_book = pre_processing_book(book)
 
-        # analyze frequency distribution of tokens and plot it
-        analyze_freq_distribution_of_tokens(tokens, book_file_name)
+        input()
 
-        # generating word cloud of books
-        generate_word_cloud(new_book, book_file_name)
-
-        # get relationship between the word length and frequency
-        get_relationship_between_the_word_length_and_frequency(tokens, book_file_name)
-
-        # do POS_tagging and Get the distribution of various tags
-        # We will be using PennTreebank as tagset which comes by default in NLTK
-        do_pos_tag_and_get_dist_tags(tokens, book_file_name)
+        # # analyze frequency distribution of tokens and plot it
+        # analyze_freq_distribution_of_tokens(tokens, book_file_name)
+        #
+        # # generating word cloud of books
+        # generate_word_cloud(new_book, book_file_name)
+        #
+        # # get relationship between the word length and frequency
+        # get_relationship_between_the_word_length_and_frequency(tokens, book_file_name)
+        #
+        # # do POS_tagging and Get the distribution of various tags
+        # # We will be using PennTreebank as tagset which comes by default in NLTK
+        # do_pos_tag_and_get_dist_tags(tokens, book_file_name)
