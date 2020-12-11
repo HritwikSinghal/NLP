@@ -103,7 +103,7 @@ def analyze_freq_distribution_of_tokens(tokens, book_file_name):
 def generate_word_cloud(words, book_file_name):
     """
     function:   Wrapper Function to generate word Clouds
-    
+
     Input:      A string called "words" which contains the words of book.
                 A string: "book_file_name" which is name of the book as stored on Hard disk.
 

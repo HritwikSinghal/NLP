@@ -5,7 +5,17 @@ import multidict
 from wordcloud import WordCloud, STOPWORDS
 
 
-def print_image(wordcloud: WordCloud, book_file_name, stopwords_flag=0):
+def save_word_cloud(wordcloud: WordCloud, book_file_name, stopwords_flag=0):
+    """
+    function:   Saves the word cloud as image on HDD
+
+    Input:      WordCloud Class object
+                A string: "book_file_name" which is name of the book as stored on Hard disk.
+                A flag: "stopwords_flag". just for naming.
+
+    Returns:    Nothings
+    """
+
     # just for naming
     if stopwords_flag:
         name = "word_cloud_with_stopwords_removed_" + book_file_name
@@ -17,6 +27,15 @@ def print_image(wordcloud: WordCloud, book_file_name, stopwords_flag=0):
 
 
 def getFrequencyDictForText(sentence, stopwords_flag):
+    """
+    function:   Get freq dist for a sentence
+
+    Input:      A string called "sentence" which contains the words of book.
+                A flag: "stopwords_flag". if we want stopwords removed, then stopwords_flag=1, otherwise 0
+
+    Returns:    A dictionary
+    """
+
     fullTermsDict = multidict.MultiDict()
     tmpDict = {}
 
@@ -33,6 +52,15 @@ def getFrequencyDictForText(sentence, stopwords_flag):
 
 
 def start(words, book_file_name, stopwords_flag=0):
+    """
+    function:   Function to generate word Clouds
+    Input:      A string called "words" which contains the words of book.
+                A string: "book_file_name" which is name of the book as stored on Hard disk.
+                A flag: "stopwords_flag". if we want stopwords removed, then stopwords_flag=1, otherwise 0
+
+    Returns:    Nothing
+    """
+
     # if we want to generate with stopwords removed, then stopwords_flag=1 and this is executed
     if stopwords_flag:
         my_stopwords = set(STOPWORDS)
@@ -50,4 +78,4 @@ def start(words, book_file_name, stopwords_flag=0):
             getFrequencyDictForText(words, stopwords_flag))
 
     # print output to image
-    print_image(wordcloud, book_file_name, stopwords_flag=stopwords_flag)
+    save_word_cloud(wordcloud, book_file_name, stopwords_flag=stopwords_flag)
