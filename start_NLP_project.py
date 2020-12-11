@@ -190,10 +190,11 @@ if __name__ == '__main__':
     ]
 
     for book_file_name in book_file_name_list:
-        # importing book and storing its lines in list
+        # importing book and storing its lines in list called "book"
         book = import_book(book_file_name)
 
         # generate tokens and do pre-processing & lemmatization of the book
+        # A string: "new_book", A List: "tokens".
         new_book, tokens = pre_processing_book(book)
 
         # analyze frequency distribution of tokens and plot it
