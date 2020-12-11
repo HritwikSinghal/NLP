@@ -12,11 +12,11 @@ Returns:
 from nltk.tokenize import word_tokenize
 from nltk.stem import WordNetLemmatizer
 
-import pre_process
-import freq_dist_tokens
-import word_cloud
-import relation_word_len_freq
-import pos_tag
+import a_pre_process
+import b_freq_dist_tokens
+import c_word_cloud
+import d_relation_word_len_freq
+import e_pos_tag
 
 lemmatizer = WordNetLemmatizer()
 
@@ -79,7 +79,7 @@ def pre_processing_book(book: list):
     """
 
     # applying all pre-processing and storing result in a string
-    new_book = pre_process.start(book)
+    new_book = a_pre_process.start(book)
 
     # lemmatizing and tokenize the book
     new_book, tokens = tokenize_and_lemmatization(new_book)
@@ -97,7 +97,7 @@ def analyze_freq_distribution_of_tokens(tokens, book_file_name):
     Returns:    Nothing
     """
 
-    freq_dist_tokens.start(tokens, book_file_name)
+    b_freq_dist_tokens.start(tokens, book_file_name)
 
 
 def generate_word_cloud(words, book_file_name):
@@ -113,10 +113,10 @@ def generate_word_cloud(words, book_file_name):
     """"""
 
     # without stopwords removal
-    word_cloud.start(words, book_file_name, stopwords_flag=0)
+    c_word_cloud.start(words, book_file_name, stopwords_flag=0)
 
     # with stopwords removal
-    word_cloud.start(words, book_file_name, stopwords_flag=1)
+    c_word_cloud.start(words, book_file_name, stopwords_flag=1)
 
 
 def count_freq_of_each_token(tokens: list):
@@ -150,7 +150,7 @@ def get_relationship_between_the_word_length_and_frequency(tokens: list, book_fi
     freq = count_freq_of_each_token(tokens)
 
     # get relationship
-    relation_word_len_freq.start(freq, book_file_name)
+    d_relation_word_len_freq.start(freq, book_file_name)
 
 
 def do_pos_tag_and_get_dist_tags(tokens: list, book_file_name):
@@ -163,10 +163,16 @@ def do_pos_tag_and_get_dist_tags(tokens: list, book_file_name):
     Returns:    Nothing
     """
 
-    pos_tag.start(tokens, book_file_name)
+    e_pos_tag.start(tokens, book_file_name)
 
 
 def get_nouns():
+    """
+    function:
+    Input:
+    Returns:
+    """
+
     pass
 
 
