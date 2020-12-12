@@ -11,6 +11,7 @@ Returns:
 
 from nltk.tokenize import word_tokenize
 from nltk.stem import WordNetLemmatizer
+from nltk.corpus import wordnet as wn
 
 import a_pre_process
 import b_freq_dist_tokens
@@ -160,20 +161,37 @@ def do_pos_tag_and_get_dist_tags(tokens: list, book_file_name):
     Input:      A list:     "tokens"
                 A string:   "book_file_name" which is name of the book as stored on Hard disk.
 
-    Returns:    Nothing
+    Returns:    A list: "tags", which contains a tuple as its elements. Each tuple is a word along with its tag
     """
 
-    e_pos_tag.start(tokens, book_file_name)
+    tags = e_pos_tag.start(tokens, book_file_name)
+
+    return tags
 
 
-def get_nouns():
+def if_food(word):
+    syns = wn.synsets(str(word))
+
+    for syn in syns:
+        print(syn)
+        print(syn.name())
+        print(syn.definition())
+        print()
+
+
+def get_nouns_verbs(tags):
     """
-    function:
-    Input:
+    function:   get list of nouns and verbs
+
+    Input:      A list: "tags", which contains a tuple as its elements. Each tuple is a word along with its tag.
+
     Returns:
     """
 
-    pass
+    list_of_nouns = []
+    list_of_verbs = []
+
+    if_food("dog")
 
 
 if __name__ == '__main__':
@@ -197,15 +215,25 @@ if __name__ == '__main__':
         # A string: "new_book", A List: "tokens".
         new_book, tokens = pre_processing_book(book)
 
-        # analyze frequency distribution of tokens and plot it
-        analyze_freq_distribution_of_tokens(tokens, book_file_name)
+        # # analyze frequency distribution of tokens and plot it
+        # analyze_freq_distribution_of_tokens(tokens, book_file_name)
+        #
+        # # generating word cloud of books
+        # generate_word_cloud(new_book, book_file_name)
+        #
+        # # get relationship between the word length and frequency
+        # get_relationship_between_the_word_length_and_frequency(tokens, book_file_name)
 
-        # generating word cloud of books
-        generate_word_cloud(new_book, book_file_name)
+        """ 
+        Do POS_tagging and Get the distribution of various tags.
+        We will be using PennTreebank as tagset which comes by default in NLTK.
+        'tags' is a list which contains a tuple as its elements. Each tuple is a word along with its tag
+        """
+        tags = do_pos_tag_and_get_dist_tags(tokens, book_file_name)
 
-        # get relationship between the word length and frequency
-        get_relationship_between_the_word_length_and_frequency(tokens, book_file_name)
+        # First Part of Round 2
+        get_nouns_verbs(tags)
 
-        # do POS_tagging and Get the distribution of various tags
-        # We will be using PennTreebank as tagset which comes by default in NLTK
-        do_pos_tag_and_get_dist_tags(tokens, book_file_name)
+        input("STOP")
+
+# todo: remove debug info from pos_tag file

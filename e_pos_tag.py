@@ -1,3 +1,5 @@
+import os
+
 import nltk
 import matplotlib.pyplot as plt
 
@@ -63,10 +65,16 @@ def start(tokens, book_file_name):
     Input:      A list:     "tokens"
                 A string:   "book_file_name" which is name of the book as stored on Hard disk.
 
-    Returns:    Nothing
+    Returns:    A list: "tags", which contains a tuple as its elements. Each tuple is a word along with its tag
     """
 
     tags = nltk.pos_tag(tokens)
     # "tags" is a list which contains a tuple as its elements. Each tuple is a word along with its tag
 
+    # this line is for debugging, you should ignore it if in case it gets in the submitted code.
+    if os.path.isfile("/home/hritwik/Desktop/Link to Sem_5/NLP/Project & Ass/NLP/test_bit"):
+        return tags
+
     get_distribution_of_various_tags(tags, book_file_name)
+
+    return tags
