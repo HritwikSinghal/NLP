@@ -39,7 +39,6 @@ def check_if_relation_noun(triple, tags):
                 break
 
     if is_it_good_obj and is_it_good_sub:
-        print(triple)
         return True
     else:
         return False

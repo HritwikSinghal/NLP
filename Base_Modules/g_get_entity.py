@@ -65,7 +65,7 @@ def start(new_book: str, book_file_name: str):
         if i > 5:
             break
 
-    book_hdd_file = open("g_entity_relation_output_" + book_file_name + "_.txt", "w+")
+    book_hdd_file = open("g_entity_relation_output_of_paragraphs_" + book_file_name + "_.txt", "w+")
 
     # Now we will get the entity names and types
     print("\n")
