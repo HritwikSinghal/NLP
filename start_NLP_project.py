@@ -2,6 +2,7 @@
 This is a NLP Python project. Uses NLTK Library.
 We first have to download nltk data, use "nltk.download()"
 """
+import os
 
 """
 function:
@@ -169,17 +170,7 @@ def do_pos_tag_and_get_dist_tags(tokens: list, book_file_name):
     return tags
 
 
-def if_food(word):
-    syns = wn.synsets(str(word))
-
-    for syn in syns:
-        print(syn)
-        print(syn.name())
-        print(syn.definition())
-        print()
-
-
-def get_nouns_verbs(tags):
+def get_nouns_verbs_lexname(tags):
     """
     function:   get list of nouns and verbs
 
@@ -188,10 +179,56 @@ def get_nouns_verbs(tags):
     Returns:
     """
 
-    list_of_nouns = []
-    list_of_verbs = []
+    """
+    The 25 categories of nouns are the 25 lexnames in nltk.
+    Similarly for verbs, the 16 categories are the 16 lexnames in nltk.
+    
+    Since each word can have multiple meanings, the nltk will return all those meanings in a list
+    and we will pass the Pos tag of that word and then chose the first meaning of that word in the list. Why?
+    
+    We choose the most frequent sense for each word from the senses in a labeled corpus.
+    This corresponds to the take the first sense heuristic, 
+    since senses in WordNet are generally ordered from most-frequent to least-frequent
+    
+    Note: We will be passing the pos tag for the word to nltk to help in finding lexname.
+          This will be useful in case like when "book" is used both as verb and as a noun. 
+    """
 
-    if_food("dog")
+    # if the 2nd place in tuple has "NN" in it, then the first place of that tuple is a Noun, similarly for verb.
+    # We will be making a set of these words instead of a list so no duplicate words are stored.
+    list_of_nouns = {
+        str(x[0]).lower()
+        for x in tags
+        if "NN" in x[1]
+    }
+    list_of_verbs = {
+        str(x[0]).lower()
+        for x in tags
+        if "VB" in x[1]
+    }
+
+    # These are two dictionaries, one for verb and one for noun, that will store the lexname of each word
+    # along with the word. The words will be taken from above lists for both noun and verbs respectively.
+    list_of_noun_lexname = {}
+    list_of_verb_lexname = {}
+
+    for noun in list_of_nouns:
+        try:
+            syn = wn.synsets(noun, pos=wn.NOUN)[0]      # The "pos=wn.NOUN" flag makes sure to select the first noun lexname
+            x, y = str(syn.lexname()).split('.')
+            list_of_noun_lexname[noun] = y              # add that lexname to the dict along with the word
+        except IndexError:
+            continue
+
+    for verb in list_of_verbs:
+        try:
+            syn = wn.synsets(verb, pos=wn.VERB)[0]      # The "pos=wn.VERB" flag makes sure to select the first verb lexname
+            x, y = str(syn.lexname()).split('.')
+            list_of_verb_lexname[verb] = y              # add that lexname to the dict along with the word
+        except IndexError:
+            continue
+
+    input()
 
 
 if __name__ == '__main__':
@@ -215,14 +252,15 @@ if __name__ == '__main__':
         # A string: "new_book", A List: "tokens".
         new_book, tokens = pre_processing_book(book)
 
-        # # analyze frequency distribution of tokens and plot it
-        # analyze_freq_distribution_of_tokens(tokens, book_file_name)
-        #
-        # # generating word cloud of books
-        # generate_word_cloud(new_book, book_file_name)
-        #
-        # # get relationship between the word length and frequency
-        # get_relationship_between_the_word_length_and_frequency(tokens, book_file_name)
+        if not os.path.isfile("/home/hritwik/Desktop/Link to Sem_5/NLP/Project & Ass/NLP/test_bit"):
+            # analyze frequency distribution of tokens and plot it
+            analyze_freq_distribution_of_tokens(tokens, book_file_name)
+
+            # generating word cloud of books
+            generate_word_cloud(new_book, book_file_name)
+
+            # get relationship between the word length and frequency
+            get_relationship_between_the_word_length_and_frequency(tokens, book_file_name)
 
         """ 
         Do POS_tagging and Get the distribution of various tags.
@@ -232,8 +270,10 @@ if __name__ == '__main__':
         tags = do_pos_tag_and_get_dist_tags(tokens, book_file_name)
 
         # First Part of Round 2
-        get_nouns_verbs(tags)
+        get_nouns_verbs_lexname(tags)
 
         input("STOP")
 
-# todo: remove debug info from pos_tag file
+# todo: remove debug info from
+#           pos_tag file
+#           this file
