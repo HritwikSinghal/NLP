@@ -9,14 +9,8 @@ import os
 from nltk.tokenize import word_tokenize
 from nltk.stem import WordNetLemmatizer
 
-import a_pre_process
-import b_freq_dist_tokens
-import c_word_cloud
-import d_relation_word_len_freq
-import e_pos_tag
-import f_get_lexname
-import g_get_entity
-import h_get_entity_relations
+from Base_Modules import d_relation_word_len_freq, f_get_lexname, e_pos_tag, b_freq_dist_tokens, g_get_entity, \
+    h_get_entity_relations, a_pre_process, c_word_cloud
 
 lemmatizer = WordNetLemmatizer()
 
@@ -202,17 +196,18 @@ def recognize_entity(new_book, book_file_name):
     g_get_entity.start(new_book, book_file_name)
 
 
-def get_relations(new_book, book_file_name):
+def get_relations(new_book, book_file_name, tags):
     """
     function:   Wrapper function to Extract the relation between the entities in the book.
 
     Input:      A string: "new_book" of the pre-processed book
                 A string: "book_file_name" which is name of the book as stored on Hard disk.
+                A list:     'tags', which contains a tuple as its elements. Each tuple is a word along with its tag
 
     Returns:   Nothing
     """
 
-    h_get_entity_relations.start(new_book, book_file_name)
+    h_get_entity_relations.start(new_book, book_file_name, tags)
 
 
 if __name__ == '__main__':
@@ -265,3 +260,4 @@ if __name__ == '__main__':
 
         # todo : remove this
         input("STOP")
+        # todo: rename all files saved in one place
