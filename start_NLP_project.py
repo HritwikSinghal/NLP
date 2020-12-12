@@ -20,7 +20,8 @@ import c_word_cloud
 import d_relation_word_len_freq
 import e_pos_tag
 import f_get_lexname
-import g_entity_relation
+import g_get_entity
+import h_get_entity_relations
 
 lemmatizer = WordNetLemmatizer()
 
@@ -176,7 +177,7 @@ def get_categories(tags, book_file_name):
     """
     function:   Wrapper function to get categories of nouns and verbs
 
-    Input:      A list: "tags", which contains a tuple as its elements. Each tuple is a word along with its tag.
+    Input:      A list:     "tags", which contains a tuple as its elements. Each tuple is a word along with its tag.
                 A string:   "book_file_name" which is name of the book as stored on Hard disk.
 
     Returns:    set_of_nouns: a set of unique nouns in the book
@@ -197,13 +198,25 @@ def recognize_entity(new_book, book_file_name):
                 (1) First recognise all the entity and then
                 (2) recognise all entity types.
 
-    Input:      a string of the pre-processed book
-                A string:   "book_file_name" which is name of the book as stored on Hard disk.
+    Input:      A string: "new_book" of the pre-processed book
+                A string: "book_file_name" which is name of the book as stored on Hard disk.
 
     Returns:    Nothing
     """
 
-    g_entity_relation.start(new_book, book_file_name)
+    g_get_entity.start(new_book, book_file_name)
+
+
+def get_relations(new_book):
+    """
+    function:
+
+    Input:      A string: "new_book" of the pre-processed book
+
+    Returns:
+    """
+
+    h_get_entity_relations.start(new_book)
 
 
 if __name__ == '__main__':
@@ -246,13 +259,16 @@ if __name__ == '__main__':
             We will be using PennTreebank as tagset which comes by default in NLTK.
             'tags' is a list which contains a tuple as its elements. Each tuple is a word along with its tag
             """
-        tags = do_pos_tag_and_get_dist_tags(tokens, book_file_name)
+            tags = do_pos_tag_and_get_dist_tags(tokens, book_file_name)
 
-        # Round 2: "First Part"
-        set_of_nouns, set_of_verbs, dict_of_noun_lexname, dict_of_verb_lexname = get_categories(tags,
-                                                                                                book_file_name)
-        # Round 2: "Second Part"
-        recognize_entity(new_book, book_file_name)
+            # Round 2: "First Part"
+            set_of_nouns, set_of_verbs, dict_of_noun_lexname, dict_of_verb_lexname = get_categories(tags,
+                                                                                                    book_file_name)
+            # Round 2: "Second Part"
+            recognize_entity(new_book, book_file_name)
+
+        # Round 2: "Third Part"
+        get_relations(new_book)
 
         # todo : remove this
         input("STOP")
