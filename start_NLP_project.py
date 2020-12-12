@@ -193,9 +193,13 @@ def get_categories(tags, book_file_name):
 
 def recognize_entity(new_book):
     """
-    function:
-    Input:
-    Returns:
+    function:   Wrapper function to recognise all entity Types in book.
+                (1) First recognise all the entity and then
+                (2) recognise all entity types.
+
+    Input:      a string of the pre-processed book
+
+    Returns:    Nothing
     """
 
     g_entity_relation.start(new_book)

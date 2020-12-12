@@ -8,18 +8,20 @@ import en_core_web_sm
 entity = en_core_web_sm.load()
 
 
-def start(new_book):
+def get_labels(paragraph: str):
+    # todo: fill this
     """
-    function:
-    Input:
-    Returns:
-    """
+    function:   recognise the entity labels of the input string.
+                We will be using spacy for NER.
+                SpaCy’s named entity recognition has been trained on the OntoNotes 5 corpus.
+
+    Input:      a string which contains the paragraph which has to labelled
+
+    Returns:     it prints out the output to file
 
     """
-    We will be using spacy for NER. SpaCy’s named entity recognition has been trained on the OntoNotes 5 corpus.
-    """
 
-    doc = entity(new_book)
+    doc = entity(paragraph)
 
     # printing number of entities of each entity types
     labels = [x.label_ for x in doc.ents]
@@ -27,17 +29,33 @@ def start(new_book):
     # print(Counter(labels))
     for x in Counter(labels):
         print(x, " : ", Counter(labels)[x])
-    print()
 
     # Here "x.text" is the entity name and "x.label_" is entity type
+    print("\nHere are the entity name and entity types found")
     for x in doc.ents:
         print(x.text, " : ", x.label_)
+    print("-----------------------------------\n")
 
+
+def start(new_book: str):
     """
-    for Entity tags:
-    "B" means the token begins an entity,
-    "I" means it is inside an entity,
-    "O" means it is outside an entity, and
-    "" means no entity tag is set
+    function:   finds the entity types of 5 different paragraphs (taken from the text)
+    Input:      a string of the pre-processed book
+    Returns:    Nothing
     """
-    # pprint([(X, X.ent_iob_, X.ent_type_) for X in doc])
+
+    words = new_book.split(" ")
+
+    paragraphs = []
+    i = 0
+    for x in range(1000, 50000, 6000):
+        i += 1
+        paragraphs.append(" ".join(words[x:x + 100]))
+        if i > 5:
+            break
+
+    for para in paragraphs:
+        print("Here is the Paragraph")
+        print(para, end='\n\n')
+        get_labels(para)
+    input()
