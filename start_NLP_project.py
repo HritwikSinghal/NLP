@@ -4,6 +4,7 @@ We first have to download nltk data, use "nltk.download()"
 """
 import os
 
+# todo: remove this
 """
 function:
 Input:
@@ -19,6 +20,7 @@ import c_word_cloud
 import d_relation_word_len_freq
 import e_pos_tag
 import f_get_lexname
+import g_entity_relation
 
 lemmatizer = WordNetLemmatizer()
 
@@ -189,6 +191,16 @@ def get_categories(tags, book_file_name):
     return set_of_nouns, set_of_verbs, dict_of_noun_lexname, dict_of_verb_lexname
 
 
+def recognize_entity(new_book):
+    """
+    function:
+    Input:
+    Returns:
+    """
+
+    g_entity_relation.start(new_book)
+
+
 if __name__ == '__main__':
     """This function runs first."""
 
@@ -206,8 +218,11 @@ if __name__ == '__main__':
         # importing book and storing its lines in list called "book"
         book = import_book(book_file_name)
 
-        # generate tokens and do pre-processing & lemmatization of the book
-        # A string: "new_book", A List: "tokens".
+        """
+        generate tokens and do pre-processing & lemmatization of the book
+        "new_book": string
+        "tokens": List
+        """
         new_book, tokens = pre_processing_book(book)
 
         # todo : remove this
@@ -221,15 +236,19 @@ if __name__ == '__main__':
             # get relationship between the word length and frequency
             get_relationship_between_the_word_length_and_frequency(tokens, book_file_name)
 
-        """ 
-        Do POS_tagging and Get the distribution of various tags.
-        We will be using PennTreebank as tagset which comes by default in NLTK.
-        'tags' is a list which contains a tuple as its elements. Each tuple is a word along with its tag
-        """
-        tags = do_pos_tag_and_get_dist_tags(tokens, book_file_name)
+            """ 
+            Do POS_tagging and Get the distribution of various tags.
+            We will be using PennTreebank as tagset which comes by default in NLTK.
+            'tags' is a list which contains a tuple as its elements. Each tuple is a word along with its tag
+            """
+            tags = do_pos_tag_and_get_dist_tags(tokens, book_file_name)
 
-        # "First Part" of Round 2
-        set_of_nouns, set_of_verbs, dict_of_noun_lexname, dict_of_verb_lexname = get_categories(tags, book_file_name)
+            # Round 2: "First Part"
+            set_of_nouns, set_of_verbs, dict_of_noun_lexname, dict_of_verb_lexname = get_categories(tags,
+                                                                                                    book_file_name)
+
+        # Round 2: "Second Part"
+        recognize_entity(new_book)
 
         # todo : remove this
         input("STOP")

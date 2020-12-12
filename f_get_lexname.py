@@ -31,7 +31,7 @@ def plot_histogram(dict_of_noun_lexname, dict_of_verb_lexname, book_file_name):
 
     # todo: print both the dicts
 
-    plt.bar(freq_dist_nouns.keys(), freq_dist_nouns.values(), width=1)
+    plt.bar(freq_dist_nouns.keys(), freq_dist_nouns.values(), width=1, edgecolor='black')
     plt.xticks(rotation=90)  # ratate X-axis text by 90 degree
     # plt.show()
     plt.savefig('f_lexname_Histogram_' + book_file_name + '.png', bbox_inches="tight")
