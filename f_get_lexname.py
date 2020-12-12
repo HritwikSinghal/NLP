@@ -29,7 +29,16 @@ def plot_histogram(dict_of_noun_lexname, dict_of_verb_lexname, book_file_name):
         else:
             freq_dist_verbs[dict_of_verb_lexname[x]] += 1
 
-    # todo: print both the dicts
+    # printing both the dictionaries
+    print("------------------------------\n"
+          "Here are the freq dist of nouns.")
+    for x in freq_dist_nouns:
+        print(x, " ", freq_dist_nouns[x])
+
+    print("\nHere are the freq dist of Verbs.")
+    for x in freq_dist_verbs:
+        print(x, " ", freq_dist_verbs[x])
+    print("----------------------------------")
 
     plt.bar(freq_dist_nouns.keys(), freq_dist_nouns.values(), width=1, edgecolor='black')
     plt.xticks(rotation=90)  # ratate X-axis text by 90 degree

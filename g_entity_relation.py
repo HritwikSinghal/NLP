@@ -1,15 +1,11 @@
-from pprint import pprint
-
-import spacy
-from spacy import displacy
 from collections import Counter
 import en_core_web_sm
 
 entity = en_core_web_sm.load()
 
 
-def get_labels(paragraph: str, book_file_name, book_hdd_file):
-    # todo: fill this
+def get_labels(paragraph: str, book_hdd_file):
+    # todo: maybe This will return something
     """
     function:   recognise the entity labels of the input string.
                 We will be using spacy for NER.
@@ -17,7 +13,6 @@ def get_labels(paragraph: str, book_file_name, book_hdd_file):
 
     Input:      a string:       "paragraph" which contains the paragraph which has to labelled
                 A string:       "book_file_name" which is name of the book as stored on Hard disk.
-                file object:    "book_hdd_file", file object to write output to file
 
     Returns:     it writes out the output to file
 
@@ -74,11 +69,12 @@ def start(new_book: str, book_file_name: str):
     book_hdd_file = open("g_entity_relation_output_" + book_file_name + "_.txt", "w+")
 
     # Now we will get the entity names and types
+    print("\n")
     for para in paragraphs:
         print("Here is the Paragraph.")
         book_hdd_file.write("\nHere is the Paragraph.\n")
         print(para, end='\n\n')
         book_hdd_file.write(para + '\n\n')
-        get_labels(para, book_file_name, book_hdd_file)
+        get_labels(para, book_hdd_file)
 
     book_hdd_file.close()

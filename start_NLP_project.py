@@ -246,12 +246,11 @@ if __name__ == '__main__':
             We will be using PennTreebank as tagset which comes by default in NLTK.
             'tags' is a list which contains a tuple as its elements. Each tuple is a word along with its tag
             """
-            tags = do_pos_tag_and_get_dist_tags(tokens, book_file_name)
+        tags = do_pos_tag_and_get_dist_tags(tokens, book_file_name)
 
-            # Round 2: "First Part"
-            set_of_nouns, set_of_verbs, dict_of_noun_lexname, dict_of_verb_lexname = get_categories(tags,
-                                                                                                    book_file_name)
-
+        # Round 2: "First Part"
+        set_of_nouns, set_of_verbs, dict_of_noun_lexname, dict_of_verb_lexname = get_categories(tags,
+                                                                                                book_file_name)
         # Round 2: "Second Part"
         recognize_entity(new_book, book_file_name)
 
