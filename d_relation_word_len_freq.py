@@ -43,4 +43,4 @@ def start(freq: dict, book_file_name):
     plt.xlabel('words of length x')
 
     # saving plot as image
-    fig.savefig('relation_between_word_len_and_freq_' + book_file_name + '.png', bbox_inches="tight")
+    fig.savefig('d_relation_between_word_len_and_freq_' + book_file_name + '.png', bbox_inches="tight")

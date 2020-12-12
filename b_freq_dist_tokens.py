@@ -18,7 +18,7 @@ def plot_freq_dist(book_file_name, freq_dist):
     freq_dist.plot(25, cumulative=False)
     # plt.show()
     # saving plot as image
-    fig.savefig('freqDist_' + book_file_name + '.png', bbox_inches="tight")
+    fig.savefig('b_freqDist_' + book_file_name + '.png', bbox_inches="tight")
 
 
 def start(tokens, book_file_name):

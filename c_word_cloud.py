@@ -18,9 +18,9 @@ def save_word_cloud(wordcloud: WordCloud, book_file_name, stopwords_flag=0):
 
     # just for naming
     if stopwords_flag:
-        name = "word_cloud_with_stopwords_removed_" + book_file_name
+        name = "c_word_cloud_with_stopwords_removed_" + book_file_name
     else:
-        name = "word_cloud_without_stopwords_removed_" + book_file_name
+        name = "c_word_cloud_without_stopwords_removed_" + book_file_name
 
     # actual code to output
     wordcloud.to_file(name + '.png')

@@ -55,7 +55,7 @@ def get_distribution_of_various_tags(tags, book_file_name):
     plt.show()
 
     # saving plot as image
-    fig.savefig('POS_TAG_freqDist_' + book_file_name + '.png', bbox_inches="tight")
+    fig.savefig('e_POS_TAG_freqDist_' + book_file_name + '.png', bbox_inches="tight")
 
 
 def start(tokens, book_file_name):
@@ -71,6 +71,7 @@ def start(tokens, book_file_name):
     tags = nltk.pos_tag(tokens)
     # "tags" is a list which contains a tuple as its elements. Each tuple is a word along with its tag
 
+    # todo : remove this
     # this line is for debugging, you should ignore it if in case it gets in the submitted code.
     if os.path.isfile("/home/hritwik/Desktop/Link to Sem_5/NLP/Project & Ass/NLP/test_bit"):
         return tags
