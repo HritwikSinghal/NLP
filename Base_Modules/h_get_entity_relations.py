@@ -64,7 +64,7 @@ def start(new_book: str, book_file_name: str, tags: list):
     for x in range(0, 20000, 10000):
         TEXT.append(new_book[x:x + 10000])
 
-    relation_file = open("h_entity_list_" + book_file_name + '.txt', 'w+')
+    relation_file = open("h_entity_relation_list_" + book_file_name + '.txt', 'w+')
 
     # passing text to StanfordOpenIE to process
     with StanfordOpenIE() as client:
@@ -74,12 +74,9 @@ def start(new_book: str, book_file_name: str, tags: list):
 
                 # Below lines check if the relation is between two noun entities. If yes, only then print them.
                 if check_if_relation_noun(triple, tags):
-                    print('|-', triple)
+                    # print('|-', triple)
                     relation_file.write("|- " + str(triple) + '\n')
 
-            # todo: remove
-            input("IN")
-
-            graph_image = 'h_entity_graph' + book_file_name + str(random.randint(0, 100000)) + '_.png'
+            graph_image = 'h_entity_relation_graph' + book_file_name + str(random.randint(0, 100000)) + '_.png'
             client.generate_graphviz_graph(text, graph_image)
             print('Graph generated: %s.' % graph_image)

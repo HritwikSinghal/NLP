@@ -231,16 +231,14 @@ if __name__ == '__main__':
         # "new_book" is a string, "tokens" is a List
         new_book, tokens = pre_processing_book(book)
 
-        # todo : remove this
-        if not os.path.isfile("/home/hritwik/Desktop/Link to Sem_5/NLP/Project & Ass/NLP/test_bit"):
-            # analyze frequency distribution of tokens and plot it
-            analyze_freq_distribution_of_tokens(tokens, book_file_name)
+        # analyze frequency distribution of tokens and plot it
+        analyze_freq_distribution_of_tokens(tokens, book_file_name)
 
-            # generating word cloud of books
-            generate_word_cloud(new_book, book_file_name)
+        # generating word cloud of books
+        generate_word_cloud(new_book, book_file_name)
 
-            # get relationship between the word length and frequency
-            get_relationship_between_the_word_length_and_frequency(tokens, book_file_name)
+        # get relationship between the word length and frequency
+        get_relationship_between_the_word_length_and_frequency(tokens, book_file_name)
 
         """ 
         Do POS_tagging and Get the distribution of various tags.
@@ -257,7 +255,3 @@ if __name__ == '__main__':
 
         # Round 2: "Third Part"
         get_relations(new_book, book_file_name, tags)
-
-        # todo : remove this
-        input("STOP")
-        # todo: rename all files saved in one place
