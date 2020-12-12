@@ -5,7 +5,6 @@ entity = en_core_web_sm.load()
 
 
 def get_labels(paragraph: str, book_hdd_file):
-    # todo: maybe This will return something
     """
     function:   recognise the entity labels of the input string.
                 We will be using spacy for NER.

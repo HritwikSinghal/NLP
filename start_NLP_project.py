@@ -207,16 +207,17 @@ def recognize_entity(new_book, book_file_name):
     g_get_entity.start(new_book, book_file_name)
 
 
-def get_relations(new_book):
+def get_relations(new_book, book_file_name):
     """
     function:
 
     Input:      A string: "new_book" of the pre-processed book
+                A string: "book_file_name" which is name of the book as stored on Hard disk.
 
     Returns:
     """
 
-    h_get_entity_relations.start(new_book)
+    h_get_entity_relations.start(new_book, book_file_name)
 
 
 if __name__ == '__main__':
@@ -268,7 +269,7 @@ if __name__ == '__main__':
             recognize_entity(new_book, book_file_name)
 
         # Round 2: "Third Part"
-        get_relations(new_book)
+        get_relations(new_book, book_file_name)
 
         # todo : remove this
         input("STOP")
