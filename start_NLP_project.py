@@ -237,11 +237,8 @@ if __name__ == '__main__':
         # importing book and storing its lines in list called "book"
         book = import_book(book_file_name)
 
-        """
-        generate tokens and do pre-processing & lemmatization of the book
-        "new_book": string
-        "tokens": List
-        """
+        # generate tokens and do pre-processing & lemmatization of the book.
+        # "new_book" is a string, "tokens" is a List
         new_book, tokens = pre_processing_book(book)
 
         # todo : remove this
