@@ -191,18 +191,19 @@ def get_categories(tags, book_file_name):
     return set_of_nouns, set_of_verbs, dict_of_noun_lexname, dict_of_verb_lexname
 
 
-def recognize_entity(new_book):
+def recognize_entity(new_book, book_file_name):
     """
     function:   Wrapper function to recognise all entity Types in book.
                 (1) First recognise all the entity and then
                 (2) recognise all entity types.
 
     Input:      a string of the pre-processed book
+                A string:   "book_file_name" which is name of the book as stored on Hard disk.
 
     Returns:    Nothing
     """
 
-    g_entity_relation.start(new_book)
+    g_entity_relation.start(new_book, book_file_name)
 
 
 if __name__ == '__main__':
@@ -252,7 +253,7 @@ if __name__ == '__main__':
                                                                                                     book_file_name)
 
         # Round 2: "Second Part"
-        recognize_entity(new_book)
+        recognize_entity(new_book, book_file_name)
 
         # todo : remove this
         input("STOP")
