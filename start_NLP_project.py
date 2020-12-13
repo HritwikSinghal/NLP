@@ -255,7 +255,7 @@ if __name__ == '__main__':
         'tags' is a list which contains a tuple as its elements. Each tuple is a word along with its tag
         """
         tags = do_pos_tag_and_get_dist_tags(tokens, book_file_name)
-        print("Pos Tagging for " + book_file_name + " Done")
+        print("Pos Tagging for " + book_file_name + ", Done")
 
         # Round 2: "First Part"
         set_of_nouns, set_of_verbs, dict_of_noun_lexname, dict_of_verb_lexname = get_categories(tags,
