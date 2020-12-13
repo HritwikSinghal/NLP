@@ -104,8 +104,6 @@ def generate_word_cloud(words, book_file_name):
     Returns:    Nothing
     """
 
-    """"""
-
     # without stopwords removal
     c_word_cloud.start(words, book_file_name, stopwords_flag=0)
 
@@ -270,6 +268,6 @@ if __name__ == '__main__':
         get_relations(new_book, book_file_name, tags)
         print("Getting relations between entities for " + book_file_name + ", Done")
 
-    print("All Done...")
-    print("\n\nPlease see the root folder of project, there will be many graphs and text files generated.")
+    print("\n--------------------------------------------------\nAll Done...")
+    print("Please see the root folder of project, there will be many graphs and text files generated.")
     print("These files will be starting with letters like 'a_' or 'b_' (and so on) followed by what that file is about")
