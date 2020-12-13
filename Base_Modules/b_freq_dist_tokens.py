@@ -25,8 +25,8 @@ def start(tokens, book_file_name):
     """
     function:   Analyzes the frequency distribution of tokens.
 
-    Input:      A List: "tokens".
-                A string: "book_file_name" which is name of the book as stored on Hard disk.
+    Input:      A List:     "tokens" which contains lemmatized words.
+                A string:   "book_file_name" which is name of the book as stored on Hard disk.
 
     Returns:    Nothing
     """

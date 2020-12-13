@@ -69,7 +69,7 @@ def pre_processing_book(book: list):
     Input:      A List which contain the lines of book as its elements.
 
     Returns:    A string called "new_book".
-                A List called "tokens".
+                A List: "tokens" which contains lemmatized words.
     """
 
     # applying all pre-processing and storing result in a string
@@ -85,7 +85,7 @@ def analyze_freq_distribution_of_tokens(tokens, book_file_name):
     """
     function:   wrapper function for Analyzing the frequency distribution of tokens
 
-    Input:      A List: "tokens".
+    Input:      A List: "tokens" which contains lemmatized words.
                 A string: "book_file_name" which is name of the book as stored on Hard disk.
 
     Returns:    Nothing
@@ -115,7 +115,7 @@ def count_freq_of_each_token(tokens: list):
     """
     function:   Count freq of each token and store it in a Dict.
 
-    Input:      A list: "tokens"
+    Input:      A List: "tokens" which contains lemmatized words.
 
     Returns:    A dictionary: which contains the word as key and freq of each token as value.
     """
@@ -132,7 +132,7 @@ def get_relationship_between_the_word_length_and_frequency(tokens: list, book_fi
     """
     function:   To get relationship between the word length and frequency.
 
-    Input:      A list:     "tokens"
+    Input:      A List:     "tokens" which contains lemmatized words.
                 A string:   "book_file_name" which is name of the book as stored on Hard disk.
 
     Returns:    Nothing
@@ -149,7 +149,7 @@ def do_pos_tag_and_get_dist_tags(tokens: list, book_file_name):
     """
     function:   Wrapper function to do POS_tagging and Get the distribution of various tags.
 
-    Input:      A list:     "tokens"
+    Input:      A List: "tokens" which contains lemmatized words.
                 A string:   "book_file_name" which is name of the book as stored on Hard disk.
 
     Returns:    A list: "tags", which contains a tuple as its elements. Each tuple is a word along with its tag
@@ -194,18 +194,17 @@ def recognize_entity(new_book, book_file_name):
     g_get_entity_labels.start(new_book, book_file_name)
 
 
-def get_relations(new_book, book_file_name, tags):
+def get_relations(new_book, book_file_name):
     """
     function:   Wrapper function to Extract the relation between the entities in the book.
 
     Input:      A string: "new_book" of the pre-processed book
                 A string: "book_file_name" which is name of the book as stored on Hard disk.
-                A list:     'tags', which contains a tuple as its elements. Each tuple is a word along with its tag
 
     Returns:   Nothing
     """
 
-    h_get_entity_relations.start(new_book, book_file_name, tags)
+    h_get_entity_relations.start(new_book, book_file_name)
 
 
 if __name__ == '__main__':
@@ -224,6 +223,7 @@ if __name__ == '__main__':
 
         # generate tokens and do pre-processing & lemmatization of the book.
         # "new_book" is a string, "tokens" is a List
+        # "tokens" is A List,  which contains lemmatized words.
         new_book, tokens = pre_processing_book(book)
         print("Pre-processing " + book_file_name + ", Done")
         print("\nPlease close any graph shown on your screen to proceed...\n"
@@ -261,7 +261,7 @@ if __name__ == '__main__':
         print("Recognizing entity types for " + book_file_name + ", Done")
 
         # Round 2: "Third Part"
-        get_relations(new_book, book_file_name, tags)
+        get_relations(new_book, book_file_name)
         print("Getting relations between entities for " + book_file_name + ", Done")
 
     print("\n--------------------------------------------------\nAll Done...")

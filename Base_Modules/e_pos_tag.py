@@ -64,14 +64,13 @@ def start(tokens, book_file_name):
     """
     function:   Do POS_tagging and Get the distribution of various tags
 
-    Input:      A list:     "tokens"
+    Input:      A List:     "tokens" which contains lemmatized words.
                 A string:   "book_file_name" which is name of the book as stored on Hard disk.
 
     Returns:    A list: "tags", which contains a tuple as its elements. Each tuple is a word along with its tag
     """
 
     tags = nltk.pos_tag(tokens)
-    # "tags" is a list which contains a tuple as its elements. Each tuple is a word along with its tag
 
     get_distribution_of_various_tags(tags, book_file_name)
     return tags

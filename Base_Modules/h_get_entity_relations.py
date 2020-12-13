@@ -1,22 +1,32 @@
 import random
 
+import nltk
 from openie import StanfordOpenIE
 
 
-def check_if_relation_noun(triple, tags):
+def is_relation_good(triple):
     """
-    function:   check if the relation is between two noun entities.
+    function:   check if the relation is between two noun entities or between a noun and a vert.
 
     Input:      A dict:   "triple", contains a subject, relation and object as its elements.
-                A list:     'tags', which contains a tuple as its elements. Each tuple is a word along with its tag
 
-    Returns:    True, if the given "triple" contains relation between two nouns.
+    Returns:    True, if the given "triple" contains good relation.
                 False otherwise
     """
 
+    split_nouns = str(triple['subject']).split(" ")
+    split_verbs = str(triple['object']).split(" ")
+
+    noun_tags = nltk.pos_tag(split_nouns)
+    verb_tags = nltk.pos_tag(str(triple['object']).split(" "))
+
+    all_words = split_nouns + split_verbs
+    all_tags = noun_tags + verb_tags
+
+
     tag_dict = {}
-    for x in tags:
-        tag_dict[x[0]] = x[1]
+    for tag in all_tags:
+        tag_dict[tag[0]] = tag[1]
 
     is_it_good_sub = False
     is_it_good_obj = False
@@ -24,14 +34,13 @@ def check_if_relation_noun(triple, tags):
     sub = str(triple['subject']).split(" ")
     obj = str(triple['object']).split(" ")
 
-    # We will check subject and verb both for pos_tag "NN"
-    # if they both are "NN" then we will print the relation.
-
+    # if they both subject and verb are "NN", then its a good relation
     for each_sub in sub:
         if "NN" in tag_dict[each_sub] and len(str(sub).split(" ")) < 4:
             is_it_good_sub = True
             break
 
+    #  or if subject is "NN" and obj is "VB", then its a good relation
     if is_it_good_sub:
         for each_obj in obj:
             if ("NN" in tag_dict[each_obj] and len(str(obj).split(" ")) < 4) or ("VB" in tag_dict[each_obj]):
@@ -44,14 +53,13 @@ def check_if_relation_noun(triple, tags):
         return False
 
 
-def start(new_book: str, book_file_name: str, tags: list):
+def start(new_book: str, book_file_name: str):
     """
     function:   Extract the relation between the entities in the book.
                 we will use Python3 wrapper for Stanford OpenIE for this job.
 
     Input:      A string:   "new_book" of the pre-processed book
                 A string:   "book_file_name" which is name of the book as stored on Hard disk.
-                A list:     'tags', which contains a tuple as its elements. Each tuple is a word along with its tag
 
     Returns:    Nothing, it generates the graph and saves it as image. It also outputs the relations in a text file
     """
@@ -73,11 +81,9 @@ def start(new_book: str, book_file_name: str, tags: list):
         for text in TEXT:
             # print('\nText: \n%s.' % text)
             for triple in client.annotate(text):
-
-                # Below lines check if the relation is between two noun entities. If yes, only then print them.
+                # Below lines check if the relation is between two noun entities or between noun and verb.
                 try:
-                    if check_if_relation_noun(triple, tags):
-                        # print('|-', triple)
+                    if is_relation_good(triple):
                         relation_file.write("|- " + str(triple) + '\n')
                 except KeyError:
                     pass
