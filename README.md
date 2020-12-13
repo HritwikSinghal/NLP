@@ -10,6 +10,39 @@ Sameer
 
 Vani
 
+## Instructions
+
+- Prerequisites for running the code:
+    - make sure to install the following packages in python:
+        - nltk,
+        - matplotlib,
+        - wordcloud
+        - spacy
+        - stanford_openie
+        - Java should also be installed for "stanford_openie"
+
+- follow below instructions to install all files.
+    - To Install Pip
+        - run in terminal : ```sudo easy_install pip```
+    - Install: wordcloud, matplotlib ,NLTK, spacy, stanford_openie:
+        ```
+        pip install -U wordcloud
+        pip install -U matplotlib
+        pip install -U spacy 
+        pip install -U nltk
+        pip install -U stanford_openie
+      ```
+
+    - To download the corpus, run in terminal:
+      ```
+      python -m nltk.downloader all
+      python -m spacy download en_core_web_sm
+      python -m spacy download en
+      ```
+
+Note: The "stanford_openie" will download training data when its run for first time, so wait till its done. 
+This will happen automatically when you run this code, so no extra steps needed.  
+
 ## Goal
 
 Our goal is to get the basic knowledge of how the algorithms work in real world and how to implement them. We will
@@ -55,15 +88,16 @@ For each book (after doing the needed preprocessing):
 
 #### Second Part:
 
-- Recognise all Persons, Location, Organisation (Types given in Fig 22.1) in book. 
+- Recognise all Persons, Location, Organisation (Types given in Fig 22.1) in book.
 
-For this you have to do two steps: 
-  - First recognise all the entity and then
-  - recognise all entity types. 
-    
-Use performance measures to measure the performance of the method used - 
-For evaluation you take a considerable amount of random passages from the Novel, 
-do a manual labelling and then compare your result with it. Present the accuracy here.
+For this you have to do two steps:
+
+- First recognise all the entity and then
+- recognise all entity types.
+
+Use performance measures to measure the performance of the method used - For evaluation you take a considerable amount
+of random passages from the Novel, do a manual labelling and then compare your result with it. Present the accuracy
+here.
 
 #### Third Part:
 
