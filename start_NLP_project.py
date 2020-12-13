@@ -1,5 +1,5 @@
 """"
-This is The NLP Python project for team Spartans
+This is The NLP Python project for team: The Spartans
 Team Memebers:  Hritwik
                 Vani
                 Sameer

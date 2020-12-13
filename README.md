@@ -1,6 +1,6 @@
 # NLP
 
-## Team Name: Spartans
+## Team Name: The Spartans
 
 ### Members:
 
