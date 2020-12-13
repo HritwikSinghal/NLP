@@ -18,7 +18,7 @@ def plot_freq_dist(book_file_name, freq_dist):
     freq_dist.plot(25, cumulative=False)
     # plt.show()
     # saving plot as image
-    fig.savefig('b_freqDist_' + book_file_name + '.png', bbox_inches="tight")
+    fig.savefig('b_freqDist_tokens_graph_' + book_file_name + '.png', bbox_inches="tight")
 
 
 def start(tokens, book_file_name):
@@ -36,13 +36,15 @@ def start(tokens, book_file_name):
     # printing 25 most common words
     less_freq_list = freq_dist.most_common(25)
 
-    print("\n=========== 25 most common words for:", book_file_name,
-          "===========\n")
-    print("Word : Count")
+    # writing all the data to file
+    file_freq_dist = open("b_most_common_words_" + book_file_name + "_.txt", 'w+')
+
+    file_freq_dist.write("\n25 most common words for: " + book_file_name + " \n\n")
+    file_freq_dist.write("Word :\t Count\n\n")
     for x in less_freq_list:
         word, count = x
-        print(word, '\t\t', count)
-    print()
+        file_freq_dist.write(word + '\t\t' + str(count) + "\n")
+    file_freq_dist.write("\n")
 
     # plot the freq dist
     plot_freq_dist(book_file_name, freq_dist)

@@ -8,3 +8,4 @@ test_file*
 h_entity_relation_graph*
 h_entity_relation_list_*
 corenlp_server*
+*.txt

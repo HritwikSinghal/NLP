@@ -25,13 +25,15 @@ def start(freq: dict, book_file_name):
     # we will take only first 15 entries of the dictionary
     freq_list = freq_list[:15]
 
-    print("\n=========== Here is relation between word length and frequency for:", book_file_name,
-          "===========\n")
-    print("Length : Count")
+    # writing all the data to file
+    word_freq_file = open("d_relation_word_len_freq_" + book_file_name + "_.txt", 'w+')
+
+    word_freq_file.write("\nHere is relation between word length and frequency for: " + book_file_name + "\n\n")
+    word_freq_file.write("Length of word : Count\n\n")
     for x in freq_list:
         length, count = x
-        print(length, '\t\t', count)
-    print()
+        word_freq_file.write(str(length) + '\t\t\t' + str(count) + "\n")
+    word_freq_file.write("\n")
 
     # plot the graph between word lengths and number of words
     fig = plt.figure(figsize=(10, 4))
@@ -43,4 +45,4 @@ def start(freq: dict, book_file_name):
     plt.xlabel('words of length x')
 
     # saving plot as image
-    fig.savefig('d_relation_between_word_len_and_freq_' + book_file_name + '.png', bbox_inches="tight")
+    fig.savefig('d_relation_between_word_len_and_freq_graph_' + book_file_name + '.png', bbox_inches="tight")

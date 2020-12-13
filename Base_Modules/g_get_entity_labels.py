@@ -21,23 +21,18 @@ def get_labels(paragraph: str, book_hdd_file):
 
     # printing number of entities of each entity types
     labels = [x.label_ for x in doc.ents]
-    print("Here are number of entities of each entity types.")
     book_hdd_file.write("Here are number of entities of each entity types\n")
 
     # print(Counter(labels))
     for x in Counter(labels):
-        print(x, " : ", Counter(labels)[x])
         book_hdd_file.write(x + " : " + str(Counter(labels)[x]) + '\n')
 
     # Here "x.text" is the entity name and "x.label_" is entity type
-    print("\nHere are the entity name and entity types found")
     book_hdd_file.write("\nHere are the entity name and entity types found\n")
 
     for x in doc.ents:
-        print(x.text, " : ", x.label_)
         book_hdd_file.write(x.text + " : " + x.label_ + '\n')
 
-    print("-----------------------------------\n")
     book_hdd_file.write("\n-----------------------------------\n")
 
 
@@ -65,15 +60,15 @@ def start(new_book: str, book_file_name: str):
         if i > 5:
             break
 
-    book_hdd_file = open("g_entity_relation_output_of_paragraphs_" + book_file_name + "_.txt", "w+")
+    random_para_file = open("g_entity_relations_of_paragraphs_" + book_file_name + "_.txt", "w+")
+    random_para_file.write("This File contains 5 random paragraphs taken from the book : " + book_file_name + "\n\n")
+    random_para_file.write("All the entity labels in these paragraphs are found out using spacy, "
+                           "for manual labelling and comparision see Report. \n\n\n")
 
     # Now we will get the entity names and types
-    print("\n")
     for para in paragraphs:
-        print("Here is the Paragraph.")
-        book_hdd_file.write("\nHere is the Paragraph.\n")
-        print(para, end='\n\n')
-        book_hdd_file.write(para + '\n\n')
-        get_labels(para, book_hdd_file)
+        random_para_file.write("\nHere is the Paragraph.\n")
+        random_para_file.write(para + '\n\n')
+        get_labels(para, random_para_file)
 
-    book_hdd_file.close()
+    random_para_file.close()

@@ -10,7 +10,7 @@ def plot_histogram(dict_of_noun_lexname, dict_of_verb_lexname, book_file_name):
                 dict_of_verb_lexname: a dictionary of verbs and their corresponding lexame
                 A string:   "book_file_name" which is name of the book as stored on Hard disk.
 
-    Returns:    Nothing, it plots the histogram and soves it on disk.
+    Returns:    Nothing, it plots the histogram and saves it on disk.
     """
 
     # first making a freq dist of each dict
@@ -29,21 +29,30 @@ def plot_histogram(dict_of_noun_lexname, dict_of_verb_lexname, book_file_name):
         else:
             freq_dist_verbs[dict_of_verb_lexname[x]] += 1
 
-    # printing both the dictionaries
-    print("------------------------------\n"
-          "Here are the freq dist of nouns.")
+    # writing types of nouns (lexnames) and their frequency to file
+    lexname_file_noun = open("f_freq_dist_of_lexname_noun_" + book_file_name + "_.txt", 'w+')
+
+    lexname_file_noun.write("Here are the types of nouns (lexnames) and their frequency\n\n")
+    lexname_file_noun.write("Lexname: \t Frequency\n\n")
     for x in freq_dist_nouns:
-        print(x, " ", freq_dist_nouns[x])
+        lexname_file_noun.write(str(x) + " : \t\t" + str(freq_dist_nouns[x]) + '\n')
 
-    print("\nHere are the freq dist of Verbs.")
+    # writing types of verbs (lexnames) and their frequency to file
+    lexname_file_verb = open("f_freq_dist_of_lexname_verb_" + book_file_name + "_.txt", 'w+')
+    lexname_file_verb.write("\nHere are the types of Verbs (lexnames) and their frequency\n\n")
+    lexname_file_verb.write("Lexname: \t Frequency\n\n")
     for x in freq_dist_verbs:
-        print(x, " ", freq_dist_verbs[x])
-    print("----------------------------------")
+        lexname_file_verb.write(str(x) + ": \t\t" + str(freq_dist_verbs[x]) + '\n')
 
-    plt.bar(freq_dist_nouns.keys(), freq_dist_nouns.values(), width=1, edgecolor='black')
+    # plotting the histogram for nouns
+    plt.bar(freq_dist_nouns.keys(), freq_dist_nouns.values(), width=1, edgecolor='black', color='cyan')
     plt.xticks(rotation=90)  # ratate X-axis text by 90 degree
-    # plt.show()
-    plt.savefig('f_lexname_Histogram_' + book_file_name + '.png', bbox_inches="tight")
+    plt.savefig('f_lexname_Histogram_Nouns_' + book_file_name + '.png', bbox_inches="tight")
+
+    # plotting the histogram for verbs
+    plt.bar(freq_dist_verbs.keys(), freq_dist_verbs.values(), width=1, edgecolor='black', color='cyan')
+    plt.xticks(rotation=90)  # ratate X-axis text by 90 degree
+    plt.savefig('f_lexname_Histogram_Verbs_' + book_file_name + '.png', bbox_inches="tight")
 
 
 def get_nouns_verbs_lexname(tags, book_file_name):

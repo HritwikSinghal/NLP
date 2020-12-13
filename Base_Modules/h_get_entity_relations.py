@@ -56,14 +56,17 @@ def start(new_book: str, book_file_name: str, tags: list):
     Returns:    Nothing, it generates the graph and saves it as image. It also outputs the relations in a text file
     """
 
-    # We will take only first 20,000 letters for getting relationships in the books
+    # We will take only first 40,000 letters for getting relationships in the books
     # We will then store block of 10,000 letters in each element of a list to make processing easy.
 
     TEXT = []
-    for x in range(0, 20000, 10000):
+    for x in range(0, 40000, 10000):
         TEXT.append(new_book[x:x + 10000])
 
     relation_file = open("h_entity_relation_list_" + book_file_name + '.txt', 'w+')
+    relation_file.write("This File contains Entity relations (of nouns) extracted"
+                        " from first 8,000 words from the book " + book_file_name + "\n")
+    relation_file.write("\n--------------------------------------------------\n\n\n")
 
     # passing text to StanfordOpenIE to process
     with StanfordOpenIE() as client:
@@ -72,10 +75,11 @@ def start(new_book: str, book_file_name: str, tags: list):
             for triple in client.annotate(text):
 
                 # Below lines check if the relation is between two noun entities. If yes, only then print them.
-                if check_if_relation_noun(triple, tags):
-                    # print('|-', triple)
-                    relation_file.write("|- " + str(triple) + '\n')
-
-            graph_image = 'h_entity_relation_graph' + book_file_name + str(random.randint(0, 100000)) + '_.png'
+                try:
+                    if check_if_relation_noun(triple, tags):
+                        # print('|-', triple)
+                        relation_file.write("|- " + str(triple) + '\n')
+                except KeyError:
+                    pass
+            graph_image = 'h_entity_relation_graph_' + book_file_name + '_' + str(random.randint(0, 100000)) + '_.png'
             client.generate_graphviz_graph(text, graph_image)
-            print('Graph generated: %s.' % graph_image)

@@ -9,7 +9,7 @@ import os
 from nltk.tokenize import word_tokenize
 from nltk.stem import WordNetLemmatizer
 
-from Base_Modules import d_relation_word_len_freq, f_get_lexname, e_pos_tag, b_freq_dist_tokens, g_get_entity, \
+from Base_Modules import d_relation_word_len_freq, f_get_lexname, e_pos_tag, b_freq_dist_tokens, g_get_entity_labels, \
     h_get_entity_relations, a_pre_process, c_word_cloud
 
 lemmatizer = WordNetLemmatizer()
@@ -119,7 +119,7 @@ def count_freq_of_each_token(tokens: list):
 
     Input:      A list: "tokens"
 
-    Returns:    A dictionary: which contains the freq of each token along with it.
+    Returns:    A dictionary: which contains the word as key and freq of each token as value.
     """
 
     freq = {}
@@ -193,7 +193,7 @@ def recognize_entity(new_book, book_file_name):
     Returns:    Nothing
     """
 
-    g_get_entity.start(new_book, book_file_name)
+    g_get_entity_labels.start(new_book, book_file_name)
 
 
 def get_relations(new_book, book_file_name, tags):
@@ -226,19 +226,28 @@ if __name__ == '__main__':
     for book_file_name in book_file_name_list:
         # importing book and storing its lines in list called "book"
         book = import_book(book_file_name)
+        print("\n-------------------------------------\n\nImporting " + book_file_name + ", Done")
 
         # generate tokens and do pre-processing & lemmatization of the book.
         # "new_book" is a string, "tokens" is a List
         new_book, tokens = pre_processing_book(book)
+        print("Pre-processing " + book_file_name + ", Done")
+        print("\nPlease close any graph shown on your screen to proceed...\n"
+              "Don't Worry, these graphs will be savod on disk\n")
 
         # analyze frequency distribution of tokens and plot it
         analyze_freq_distribution_of_tokens(tokens, book_file_name)
+        print("Analyzing frequency distribution of tokens of " + book_file_name + " and plotting it, Done")
 
         # generating word cloud of books
         generate_word_cloud(new_book, book_file_name)
+        print("Generating Word cloud of " + book_file_name + ", Done")
 
         # get relationship between the word length and frequency
         get_relationship_between_the_word_length_and_frequency(tokens, book_file_name)
+        print("Getting relation between word length and frequency for " + book_file_name + ", Done")
+        print("\nPlease close any graph shown on your screen to proceed...\n"
+              "Don't Worry, these graphs will be savod on disk\n")
 
         """ 
         Do POS_tagging and Get the distribution of various tags.
@@ -246,12 +255,21 @@ if __name__ == '__main__':
         'tags' is a list which contains a tuple as its elements. Each tuple is a word along with its tag
         """
         tags = do_pos_tag_and_get_dist_tags(tokens, book_file_name)
+        print("Pos Tagging for " + book_file_name + " Done")
 
         # Round 2: "First Part"
         set_of_nouns, set_of_verbs, dict_of_noun_lexname, dict_of_verb_lexname = get_categories(tags,
                                                                                                 book_file_name)
+        print("Recognizing categories of nouns and verbs for " + book_file_name + ", Done")
+
         # Round 2: "Second Part"
         recognize_entity(new_book, book_file_name)
+        print("Recognizing entity types for " + book_file_name + ", Done")
 
         # Round 2: "Third Part"
         get_relations(new_book, book_file_name, tags)
+        print("Getting relations between entities for " + book_file_name + ", Done")
+
+    print("All Done...")
+    print("\n\nPlease see the root folder of project, there will be many graphs and text files generated.")
+    print("These files will be starting with letters like 'a_' or 'b_' (and so on) followed by what that file is about")

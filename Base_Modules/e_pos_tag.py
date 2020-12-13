@@ -38,13 +38,15 @@ def get_distribution_of_various_tags(tags, book_file_name):
     tag_count = get_tags_count(tags)
     freq_dist = nltk.FreqDist(tag_count)
 
-    print("\n=========== Here is the distribution of various tags for:", book_file_name,
-          "===========\n")
-    print("Tag : Count")
+    # writing all the data to file
+    pos_tag_file = open("e_distribution_of_tags_" + book_file_name + "_.txt", 'w+')
+
+    pos_tag_file.write("\nHere is the distribution of various tags for: " + book_file_name + "\n\n")
+    pos_tag_file.write("Tag : \tCount\n\n")
     for x in tag_count:
         the_tag, count = x, tag_count[x]
-        print(the_tag, '\t\t', count)
-    print()
+        pos_tag_file.write(str(the_tag) + '\t\t' + str(count) + '\n')
+    pos_tag_file.write("\n")
 
     # this is the plotting part
     fig = plt.figure(figsize=(10, 4))
@@ -55,7 +57,7 @@ def get_distribution_of_various_tags(tags, book_file_name):
     plt.show()
 
     # saving plot as image
-    fig.savefig('e_POS_TAG_freqDist_' + book_file_name + '.png', bbox_inches="tight")
+    fig.savefig('e_POS_TAG_freqDist_graph_' + book_file_name + '.png', bbox_inches="tight")
 
 
 def start(tokens, book_file_name):
