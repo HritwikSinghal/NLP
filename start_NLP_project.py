@@ -211,10 +211,6 @@ def get_relations(new_book, book_file_name, tags):
 if __name__ == '__main__':
     """This function runs first."""
 
-    # uncomment below two lines if you want to download nltk data.
-    # import nltk
-    # nltk.download('all')
-
     # name of the files of book1 and book2 as stored on our hard drive
     book_file_name_list = [
         '0_alice.book',

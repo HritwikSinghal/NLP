@@ -2,15 +2,34 @@ from nltk.corpus import wordnet as wn
 import matplotlib.pyplot as plt
 
 
-def plot_histogram(dict_of_noun_lexname, dict_of_verb_lexname, book_file_name):
+def plot_histogram(book_file_name, freq_dist, name):
     """
     function:   Plot the histogram of frequency of each category for noun (and verb).
+
+    Input:      A string:   "book_file_name" which is name of the book as stored on Hard disk.
+                A dict:     "freq_dist"
+                A string:   "name", which has value 'noun' or 'verbs'
+
+    Returns:    Nothing, it plots the histogram and saves it on disk.
+    """
+
+    fig = plt.figure()
+    ax = fig.add_axes([0, 0, 1, 1])
+    ax.bar(freq_dist.keys(), freq_dist.values(), width=1, edgecolor='black', color='cyan')
+
+    plt.xticks(rotation=90)  # ratate X-axis text by 90 degree
+    plt.savefig('f_lexname_Histogram_' + name + '_' + book_file_name + '.png', bbox_inches="tight")
+
+
+def get_freq_dist(dict_of_noun_lexname, dict_of_verb_lexname, book_file_name):
+    """
+    function:   Get freq dist and Plot the histogram of frequency of each category for noun (and verb).
 
     Input:      dict_of_noun_lexname: a dictionary of nouns and their corresponding lexame
                 dict_of_verb_lexname: a dictionary of verbs and their corresponding lexame
                 A string:   "book_file_name" which is name of the book as stored on Hard disk.
 
-    Returns:    Nothing, it plots the histogram and saves it on disk.
+    Returns:    Nothing, it gets freq dist and plots the histogram and saves it on disk.
     """
 
     # first making a freq dist of each dict
@@ -32,27 +51,23 @@ def plot_histogram(dict_of_noun_lexname, dict_of_verb_lexname, book_file_name):
     # writing types of nouns (lexnames) and their frequency to file
     lexname_file_noun = open("f_freq_dist_of_lexname_noun_" + book_file_name + "_.txt", 'w+')
 
-    lexname_file_noun.write("Here are the types of nouns (lexnames) and their frequency\n\n")
+    lexname_file_noun.write("Here are the types of nouns (lexnames) and their frequency for " + book_file_name + "\n\n")
     lexname_file_noun.write("Lexname: \t Frequency\n\n")
     for x in freq_dist_nouns:
         lexname_file_noun.write(str(x) + " : \t\t" + str(freq_dist_nouns[x]) + '\n')
 
     # writing types of verbs (lexnames) and their frequency to file
     lexname_file_verb = open("f_freq_dist_of_lexname_verb_" + book_file_name + "_.txt", 'w+')
-    lexname_file_verb.write("\nHere are the types of Verbs (lexnames) and their frequency\n\n")
+    lexname_file_verb.write("Here are the types of Verbs (lexnames) and their frequency for " + book_file_name + "\n\n")
     lexname_file_verb.write("Lexname: \t Frequency\n\n")
     for x in freq_dist_verbs:
         lexname_file_verb.write(str(x) + ": \t\t" + str(freq_dist_verbs[x]) + '\n')
 
     # plotting the histogram for nouns
-    plt.bar(freq_dist_nouns.keys(), freq_dist_nouns.values(), width=1, edgecolor='black', color='cyan')
-    plt.xticks(rotation=90)  # ratate X-axis text by 90 degree
-    plt.savefig('f_lexname_Histogram_Nouns_' + book_file_name + '.png', bbox_inches="tight")
+    plot_histogram(book_file_name, freq_dist_nouns, 'nouns')
 
     # plotting the histogram for verbs
-    plt.bar(freq_dist_verbs.keys(), freq_dist_verbs.values(), width=1, edgecolor='black', color='cyan')
-    plt.xticks(rotation=90)  # ratate X-axis text by 90 degree
-    plt.savefig('f_lexname_Histogram_Verbs_' + book_file_name + '.png', bbox_inches="tight")
+    plot_histogram(book_file_name, freq_dist_verbs, 'verbs')
 
 
 def get_nouns_verbs_lexname(tags, book_file_name):
@@ -118,6 +133,6 @@ def get_nouns_verbs_lexname(tags, book_file_name):
             continue
 
     # plot the histogram
-    plot_histogram(dict_of_noun_lexname, dict_of_verb_lexname, book_file_name)
+    get_freq_dist(dict_of_noun_lexname, dict_of_verb_lexname, book_file_name)
 
     return set_of_nouns, set_of_verbs, dict_of_noun_lexname, dict_of_verb_lexname

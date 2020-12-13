@@ -34,7 +34,7 @@ def check_if_relation_noun(triple, tags):
 
     if is_it_good_sub:
         for each_obj in obj:
-            if "NN" in tag_dict[each_obj] and len(str(obj).split(" ")) < 4:
+            if ("NN" in tag_dict[each_obj] and len(str(obj).split(" ")) < 4) or ("VB" in tag_dict[each_obj]):
                 is_it_good_obj = True
                 break
 
